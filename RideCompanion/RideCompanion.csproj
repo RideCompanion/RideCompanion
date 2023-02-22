@@ -26,4 +26,11 @@
       <_ContentIncludedByDefault Remove="Views\Account\Login.cshtml" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Auth\LogOut.cshtml" />
+      <AdditionalFiles Include="Views\Auth\SignIn.cshtml" />
+      <AdditionalFiles Include="Views\Auth\SignOut.cshtml" />
+      <AdditionalFiles Include="Views\Auth\SignUp.cshtml" />
+    </ItemGroup>
+
 </Project>

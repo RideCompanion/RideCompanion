@@ -1,0 +1,224 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model RideCompanion.ViewModels.DriverViewModel
+
+@{
+    ViewBag.Title = "Driver detail";
+    Layout = "_Layout";
+    var i = 0;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@await Html.PartialAsync("_CreateCar", Model)
+@await Html.PartialAsync("_UpdateCar", Model)
+@await Html.PartialAsync("_UpdateDriver", Model)
+@await Html.PartialAsync("_UpdateTrip", Model)
+
+<a asp-controller="Driver" asp-action="Index"> Back </a>
+
+<div class="h-max w-full space-y-2 rounded-md bg-white p-4 shadow-md">
+    <h5 class="text-xl font-bold dark:text-white">Driver</h5>
+    <div class="flex flex-row space-x-2">
+        <p class="text-gray-400">FullName:</p>
+        <p class="text-gray-800">@Model.DriverDto!.FullName</p>
+    </div>
+    <div class="flex flex-row space-x-2">
+        <p class="text-gray-400">BirthDate:</p>
+        <p class="text-gray-800">@Model.DriverDto.BirthDate</p>
+    </div>
+    <div class="flex flex-row space-x-2">
+        <p class="text-gray-400">UserId:</p>
+        <p class="text-gray-800">@Model.DriverDto.UserId</p>
+    </div>
+    <a onclick="UpdateDriverData('@Model.DriverDto.Id')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+        Edit
+    </a>
+</div>
+
+@if (Model.Cars != null && Model.Cars.Any())
+{
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    #
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Number
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Model
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <span class="sr-only">Actions</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Cars)
+            {
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        @(i++)
+                    </th>
+                    <td class="px-6 py-4">
+                        @item.Number
+                    </td>
+                    <td class="px-6 py-4">
+                        @item.Color
+                    </td>
+                    <td class="px-6 py-4">
+                        @item.Model
+                    </td>
+                    <td class="px-6 py-4 text-right space-x-1">
+                        <a onclick="UpdateCarData('@item.Id')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Edit
+                        </a>
+                        <a asp-controller="Companion" asp-action="DeleteCompanion" asp-route-id="@item.Id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
+@if (Model.Trips != null && Model.Trips.Any())
+{
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    #
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    From
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    To
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Date time
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <span class="sr-only">Actions</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Trips)
+            {
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        @(i++)
+                    </th>
+                    <td class="px-6 py-4">
+                        @item.AddressFrom
+                    </td>
+                    <td class="px-6 py-4">
+                        @item.AddressTo
+                    </td>
+                    <td class="px-6 py-4">
+                        @item.DateTime
+                    </td>
+                    <td class="px-6 py-4 text-right space-x-1">
+                        <a onclick="UpdateTripData('@item.Id')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Edit
+                        </a>
+                        <a asp-controller="Trip" asp-action="DeleteTrip" asp-route-id="@item.Id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
+<script>
+
+    const options = {
+      placement: 'left',
+      backdrop: true,
+      bodyScrolling: false,
+      edge: false,
+      edgeOffset: '',
+      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30',
+      onHide: () => {
+          console.log('drawer is hidden');
+      },
+      onShow: () => {
+          console.log('drawer is shown');
+      },
+      onToggle: () => {
+          console.log('drawer has been toggled');
+      }
+    };
+
+    function CreateData() {
+      const form = document.getElementById('drawer-car-create');
+      const drawer = new Drawer(form, options);
+      drawer.show();
+    }
+
+    function UpdateCarData(id) {
+        const form = document.getElementById('drawer-car-update');
+        const drawer = new Drawer(form, options);
+        drawer.toggle();
+        fetch('/Driver/GetCarById?Id=' + id)
+            .then((response) => response.json())
+            .then((response) => {
+				const id = document.getElementById('UpdateCarId');
+                const number = document.getElementById('UpdateCarNumber');
+                const color = document.getElementById('UpdateCarColor');
+                const model = document.getElementById('UpdateCarModel');
+                id.value = response.id;
+                number.value = response.number;
+                color.value = response.color;
+                model.value = response.model;
+            });
+    }
+    
+    function UpdateDriverData(id) {
+        const form = document.getElementById('drawer-driver-update');
+        const drawer = new Drawer(form, options);
+        drawer.toggle();
+        fetch('/Driver/GetDriverById?Id=' + id)
+            .then((response) => response.json())
+            .then((response) => {
+				const id = document.getElementById('UpdateDriverId');
+                const fullName = document.getElementById('UpdateDriverFullName');
+                const birth = document.getElementById('UpdateDriverBirthDate');
+                id.value = response.id;
+                fullName.value = response.fullName;
+                birth.value = response.birthDate.substring(0, 10);
+            });
+    }
+        
+    function UpdateTripData(id) {
+        const form = document.getElementById('drawer-trip-update');
+        const drawer = new Drawer(form, options);
+        drawer.toggle();
+        fetch('/Trip/GetTripById?Id=' + id)
+            .then((response) => response.json())
+            .then((response) => {
+				const id = document.getElementById('UpdateTripId');
+				const addressFrom = document.getElementById('UpdateTripAddressFrom');
+                const addressTo = document.getElementById('UpdateTripAddressTo');
+                const dateTime = document.getElementById('UpdateTripDateTime');
+                id.value = response.id;
+                addressFrom.value = response.addressFrom;
+                addressTo.value = response.addressTo;
+                dateTime.value = response.dateTime.substring(0, 10);
+            });
+    }
+
+</script>

@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject SignInManager<IdentityUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li>
+        <button type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-user" data-collapse-toggle="dropdown-user">
+            <img aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" src="~/img/user.jpg" alt="user photo">
+            <span class="flex-1 ml-3 text-left whitespace-nowrap">User profile</span>
+        </button>
+        <ul id="dropdown-user" class="w-full bg-white shadow-lg p-4 mt-4 rounded-lg hidden">
+            <li>
+                <i class="fa-duotone fa-hand-wave"></i>
+                <span class=" font-semibold">Hello!</span>
+                <span>@User.Identity?.Name!</span>
+            </li>
+            <li>
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Manage profile</span>
+                </a>
+            </li>
+            <li>
+                <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="flex-1 ml-3 whitespace-nowrap">Sign out</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    <li>
+        <a asp-area="Identity" asp-page="/Account/Login" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span class="flex-1 ml-3 whitespace-nowrap">Sign In</span>
+        </a>
+    </li>
+    <li>
+        <a asp-area="Identity" asp-page="/Account/Register" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <i class="fa-solid fa-user-plus"></i>
+            <span class="flex-1 ml-3 whitespace-nowrap">Sign Up</span>
+        </a>
+    </li>
+}

@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - RideCompanion</title>
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="~/lib/tailwind/flowbite.min.css"/>
+    <link href="~/lib/fontAwesome/css/all.css" rel="stylesheet">
+</head>
+<body>
+
+<partial name="_NavBar"/>
+
+<div class="min-h-screen p-4 sm:ml-64">
+    <div class="min-h-screen p-4 mb-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+    <partial name="_Footer"/>
+</div>
+
+<script src="~/lib/fontAwesome/js/all.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/tailwind/datepicker.min.js"></script>
+<script src="~/lib/tailwind/flowbite.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+@await RenderSectionAsync("Scripts", false)
+
+</body>
+</html>

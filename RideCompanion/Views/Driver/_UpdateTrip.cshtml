@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model RideCompanion.ViewModels.DriverViewModel
+
+<!-- drawer component -->
+<div id="drawer-trip-update" class="fixed z-40 h-screen p-4 overflow-y-auto bg-white w-80 dark:bg-gray-800 transition-transform left-0 top-0 -translate-x-full" tabindex="-1" aria-labelledby="drawer-label">
+    <h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">
+        Update trip
+    </h5>
+    <button type="button" data-drawer-hide="drawer-trip-update" aria-controls="drawer-trip-update" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="sr-only">Close menu</span>
+    </button>
+    <p class="mb-6 text-sm text-gray-500 dark:text-gray-400">
+        Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+    </p>
+    <form method="post" asp-controller="Trip" asp-action="UpdateTrip">
+        <input asp-for="@Model.TripDto!.Id" id="UpdateTripId" type="hidden">
+        <div class="mb-6">
+            <label asp-for="@Model.TripDto!.AddressFrom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                From
+            </label>
+            <input asp-for="@Model.TripDto!.AddressFrom" id="UpdateTripAddressFrom" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" required>
+        </div>
+        <div class="mb-6">
+            <label asp-for="@Model.TripDto!.AddressTo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                To
+            </label>
+            <input asp-for="@Model.TripDto!.AddressTo" id="UpdateTripAddressTo" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name" required>
+        </div>
+        <div class="mb-6">
+            <label asp-for="@Model.TripDto!.DateTime" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Birth Date
+            </label>
+            <input asp-for="@Model.TripDto!.DateTime" id="UpdateTripDateTime" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Birth Date" value="1900-01-01" min="1900-01-01" max="2100-12-31" required>
+        </div>
+        <div class="grid grid-cols-2 gap-4 text-center">
+            <button class="px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                Close
+            </button>
+            <button type="submit" class="px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                Save changes
+                <i class="fa-solid fa-floppy-disk-circle-arrow-right"></i>
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model RideCompanion.ViewModels.CompanionViewModel
+
+@{
+    ViewBag.Title = "Companion management";
+    Layout = "_Layout";
+    var i = 0;
+}
+
+<h2 class="text-4xl font-bold dark:text-white">@ViewBag.Title</h2>
+<p class="font-normal text-gray-500 dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
+
+<hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+<partial name="_CreateCompanion"/>
+<partial name="_UpdateCompanion"/>
+
+@if (Model.Companions != null && Model.Companions.Any())
+{
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    #
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Full name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Birth date
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Phone number
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <span class="sr-only">Actions</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.Companions)
+            {
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        @(i++)
+                    </th>
+                    <td class="px-6 py-4">
+                        @item.FullName
+                    </td>
+                    <td class="px-6 py-4">
+                        @item.BirthDate
+                    </td>
+                    <td class="px-6 py-4">
+                        @item.PhoneNumber
+                    </td>
+                    <td class="px-6 py-4 text-right space-x-1">
+                        <a onclick="UpdateData('@item.Id')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Edit
+                        </a>
+                        <a asp-controller="Companion" asp-action="DeleteCompanion" asp-route-id="@item.Id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+
+<script>
+
+    const options = {
+      placement: 'right',
+      backdrop: true,
+      bodyScrolling: false,
+      edge: false,
+      edgeOffset: '',
+      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-30',
+      onHide: () => {
+          console.log('drawer is hidden');
+      },
+      onShow: () => {
+          console.log('drawer is shown');
+      },
+      onToggle: () => {
+          console.log('drawer has been toggled');
+      }
+    };
+
+    function CreateData() {
+      const form = document.getElementById('drawer-companion-create');
+      const drawer = new Drawer(form, options);
+      drawer.show();
+    }
+
+    function UpdateData(id) {
+        const form = document.getElementById('drawer-companion-update');
+        const drawer = new Drawer(form, options);
+        drawer.toggle();
+        fetch('/Companion/GetCompanionById?Id=' + id)
+            .then((response) => response.json())
+            .then((response) => {
+				const id = document.getElementById('UpdateCompanionId');
+                const name = document.getElementById('UpdateCompanionName');
+                const birth = document.getElementById('UpdateCompanionBirthDate');
+                const number = document.getElementById('UpdateCompanionPhoneNumber');
+                id.value = response.id;
+                name.value = response.name;
+                birth.value = response.birthDate.substring(0, 10);
+                number.value = response.phoneNumber;
+                console.log(response);
+            });
+    }
+
+</script>

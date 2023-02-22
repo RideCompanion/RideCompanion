@@ -1,0 +1,22 @@
+﻿@model HomeModel
+
+@{
+    ViewData["Title"] = "Privacy Policy";
+    Layout = "_Layout";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<div class="flex items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800">
+    <div class="reports">
+        @foreach (var item in Model.ReportsList!.Select((value, i) => new { value, i }))
+        {
+            <a href="@item.i">@item.value</a>
+        }
+    </div>
+    <div class="web-report">
+        @await Model.WebReport!.Render()
+    </div>
+</div>

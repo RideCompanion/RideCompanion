@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Trip.Domain\Trip.Domain.csproj" />
+        <ProjectReference Include="..\Shared.Core\Shared.Core.csproj" />
         <ProjectReference Include="..\Shared.Migrations\Shared.Migrations.csproj" />
     </ItemGroup>
 

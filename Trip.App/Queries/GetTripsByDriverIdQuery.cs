@@ -25,7 +25,7 @@ public class GetTripsByDriverIdQuery : IRequest<IQueryable<TripEntity>>
         }
         public Task<IQueryable<TripEntity>> Handle(GetTripsByDriverIdQuery query, CancellationToken cancellationToken)
         {
-            var data = _context.Trips.Where(d => d.Driver!.Id == query.DriverId);
+            var data = _context.Trips.Where(d => d.DriverId == query.DriverId);
             return Task.FromResult(data);
         }
     }

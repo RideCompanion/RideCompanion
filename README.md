@@ -23,3 +23,13 @@ A -- Command params --> C(Command)
 B -- Query params --> D{Data Base}
 C -- Command params --> D
 ```
+
+## Migrations
+```
+dotnet ef migrations add EntitiesNullable --context ApplicationDbContext --project .\Shared.Migrations\ --startup-project .\RideCompanion\
+dotnet ef database update EntitiesNullable --context ApplicationDbContext --project .\Shared.Migrations\ --startup-project .\RideCompanion\
+dotnet ef database update --context ApplicationDbContext --project .\Shared.Migrations\ --startup-project .\RideCompanion\
+dotnet ef migrations remove --context ApplicationDbContext --project .\Shared.Migrations\ --startup-project .\RideCompanion\
+```
+
+

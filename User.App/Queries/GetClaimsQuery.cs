@@ -34,7 +34,7 @@ public class GetClaimsQuery : IRequest<ClaimEntity?>
         public async Task<ClaimEntity?> Handle(GetClaimsQuery query, CancellationToken cancellationToken)
         {
             var userClaims = await _context.UsersClaims.FirstOrDefaultAsync(d =>
-                    d.AppUserId == query._userId,
+                    d.UserId == query._userId,
                 cancellationToken: cancellationToken);
 
             if (userClaims is null)

@@ -4,7 +4,7 @@
 */
 
 using Microsoft.EntityFrameworkCore;
-using Shared.Core.Entities;
+using Shared.Abstractions.Entities;
 using Shared.Migrations;
 
 namespace Shared.Repository.Repository;

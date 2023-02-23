@@ -4,11 +4,11 @@
 */
 
 using System.ComponentModel.DataAnnotations;
-using Shared.Core.Entities;
+using Shared.Abstractions.Entities;
 
 namespace User.Domain.Entities;
 
-public class ClaimEntity : IAuditableEntity
+public class ClaimEntity : IBaseEntity
 {
     /// <summary>
     /// Id
@@ -22,14 +22,9 @@ public class ClaimEntity : IAuditableEntity
     public String? ClaimName { get; set; }
     
     /// <summary>
-    /// UserClaims
+    /// User claims
     /// </summary>
-    public IList<AppUserClaimEntity>? AppUserClaims { get; set; }
-    
-    /// <summary>
-    /// User roles
-    /// </summary>
-    public IList<AppUserRoleEntity>? AppUserRoles { get; set; }
+    public IList<UserClaimEntity>? UserClaims { get; set; }
     
     /// <summary>
     /// Id created user

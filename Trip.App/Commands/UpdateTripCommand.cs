@@ -4,11 +4,6 @@
 */
 
 using System.Security.Claims;
-using AutoMapper;
-using Companion.Domain.Dto;
-using Companion.Domain.Entities;
-using Driver.Domain.Dto;
-using Driver.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Shared.Migrations;
@@ -35,13 +30,11 @@ public class UpdateTripCommand : IRequest<Guid>
     {
         private readonly IApplicationDbContext _context;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IMapper _mapper;
         
-        public UpdateTripCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        public UpdateTripCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _httpContextAccessor = httpContextAccessor;
-            _mapper = mapper;
         }
         
         public async Task<Guid> Handle(UpdateTripCommand command, CancellationToken cancellationToken)
@@ -52,15 +45,9 @@ public class UpdateTripCommand : IRequest<Guid>
             if (entity == null) 
                 return command.TripDto.Id;
 
-            entity.Driver = command.TripDto.Driver != null
-                ? _mapper.Map<DriverDto, DriverEntity>(command.TripDto.Driver)
-                : null;
-            entity.Companion = command.TripDto.Companion != null
-                ? _mapper.Map<CompanionDto, CompanionEntity>(command.TripDto.Companion)
-                : null;
-            entity.Car = command.TripDto.Car != null 
-                ? _mapper.Map<CarDto, CarEntity>(command.TripDto.Car) 
-                : null;
+            entity.DriverId = command.TripDto.Driver.Id;
+            entity.CompanionId = command.TripDto.Companion.Id;
+            entity.CarId = command.TripDto.Car.Id;
             entity.AddressFrom = command.TripDto.AddressFrom;
             entity.AddressTo = command.TripDto.AddressTo;
             entity.DateTime = command.TripDto.DateTime;

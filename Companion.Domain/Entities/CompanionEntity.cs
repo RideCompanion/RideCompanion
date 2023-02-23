@@ -3,7 +3,7 @@
  * Author: A.A.Konkin
 */
 
-using Shared.Core.Entities;
+using Shared.Abstractions.Entities;
 
 namespace Companion.Domain.Entities;
 

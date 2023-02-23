@@ -4,14 +4,11 @@
 */
 
 using System.ComponentModel.DataAnnotations;
-using Shared.Core.Entities;
+using Shared.Abstractions.Entities;
 
 namespace User.Domain.Entities;
 
-/// <summary>
-/// App User Role Entity
-/// </summary>
-public class AppUserRoleEntity : IAuditableEntity
+public class UserEntity : IBaseEntity
 {
     /// <summary>
     /// Id
@@ -20,17 +17,40 @@ public class AppUserRoleEntity : IAuditableEntity
     public Guid Id { get; set; }
     
     /// <summary>
-    /// App user Id
+    /// Full User Name
     /// </summary>
-    public Guid AppUserId { get; set; }
-    public AppUserEntity? AppUser { get; set; }
+    public string? FullUserName { get; set; }
     
     /// <summary>
-    /// Role Id
+    /// Password
     /// </summary>
-    public Guid RoleId { get; set; }
-    public AppRoleEntity? Role { get; set; }
+    public string? Password { get; set; }
     
+    /// <summary>
+    /// Date of birth
+    /// </summary>
+    public DateTime DateOfBirth { get; set; }
+    
+    /// <summary>
+    /// Email
+    /// </summary>
+    public string? Email { get; set; }
+    
+    /// <summary>
+    /// Phone number
+    /// </summary>
+    public string? PhoneNumber { get; set; }
+    
+    /// <summary>
+    /// User claims
+    /// </summary>
+    public IList<UserClaimEntity>? Claims { get; set; }
+    
+    /// <summary>
+    /// User roles
+    /// </summary>
+    public ICollection<RoleEntity> Roles { get; set; }
+
     /// <summary>
     /// Id created user
     /// </summary>

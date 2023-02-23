@@ -3,9 +3,9 @@
  * Author: A.A.Konkin
 */
 
-namespace Shared.Core.Entities;
+namespace Shared.Abstractions.Entities;
 
-public interface IAuditableEntity
+public class AuditableEntity : IAuditableEntity
 {
     /// <summary>
     /// Id created user

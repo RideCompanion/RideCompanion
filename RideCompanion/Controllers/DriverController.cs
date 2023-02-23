@@ -202,13 +202,9 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> UpdateCar(DriverViewModel viewModel)
     {
-        await Mediator.Send(new UpdateCarCommand
-        {
-            CarId = viewModel.CarDto!.Id,
-            CarDto = viewModel.CarDto
-        });
+        await Mediator.Send(new UpdateCarCommand(viewModel.CarDto!));
 
-        return RedirectToAction("DriverDetail", viewModel.CarDto.DriverId);
+        return RedirectToAction("DriverDetail", viewModel.CarDto!.DriverId);
     }
 
     /// <summary>

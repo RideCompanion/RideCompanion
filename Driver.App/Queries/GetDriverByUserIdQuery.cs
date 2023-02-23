@@ -1,12 +1,25 @@
-﻿using Driver.Domain.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Driver.Domain.Entities;
 using MediatR;
 using Shared.Migrations;
 
 namespace Driver.App.Queries;
 
+/// <summary>
+/// Query
+/// </summary>
 public class GetDriverByUserIdQuery : IRequest<IQueryable<DriverEntity>>
 {
-    public string? UserId { get; set; }
+    public Guid UserId { get; set; }
+
+    public GetDriverByUserIdQuery(Guid userId)
+    {
+        UserId = userId;
+    }
 
     public class GetDriverByUserIdQueryHandler : IRequestHandler<GetDriverByUserIdQuery, IQueryable<DriverEntity>>
     {

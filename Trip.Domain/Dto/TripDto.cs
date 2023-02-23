@@ -1,10 +1,15 @@
-﻿using Companion.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Companion.Domain.Dto;
 using Driver.Domain.Dto;
 
 namespace Trip.Domain.Dto;
 
 /// <summary>
-/// Trip
+/// Trip dto
 /// </summary>
 public class TripDto
 {

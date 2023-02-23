@@ -1,4 +1,9 @@
-﻿using MediatR;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using MediatR;
 using Shared.Migrations;
 using User.Domain.Dto;
 using User.Domain.Entities;
@@ -43,8 +48,6 @@ public class CreateUserCommand : IRequest<AppUserEntity>
                 DateOfBirth = command.Dto.DateOfBirth,
                 Email = command.Dto.Email,
                 PhoneNumber = command.Dto.PhoneNumber,
-                DriverId = command.Dto.DriverId,
-                CompanionId = command.Dto.CompanionId,
 
                 CreatedById = default,
                 CreateDate = DateTime.Now,

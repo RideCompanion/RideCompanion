@@ -1,4 +1,9 @@
-﻿using System.Security.Claims;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using System.Security.Claims;
 using Driver.Domain.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -38,6 +43,7 @@ public class UpdateCarCommand : IRequest<Guid>
             
             if (entity != null)
             {
+                entity.UserId = Guid.Parse(userId!);
                 entity.Number = command.CarDto?.Number;
                 entity.Color = command.CarDto?.Color;
                 entity.Model = command.CarDto?.Model;

@@ -1,10 +1,18 @@
-﻿using Driver.Domain.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Driver.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared.Migrations;
 
 namespace Driver.App.Queries;
 
+/// <summary>
+/// Query
+/// </summary>
 public class GetCarByIdQuery : IRequest<CarEntity?>
 {
     public Guid Id { get; set; }

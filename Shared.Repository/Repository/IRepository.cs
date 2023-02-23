@@ -1,4 +1,9 @@
-﻿using Shared.Core.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Shared.Core.Entities;
 
 namespace Shared.Repository.Repository;
 

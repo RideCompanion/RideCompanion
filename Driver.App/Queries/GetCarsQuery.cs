@@ -1,9 +1,17 @@
-﻿using Driver.Domain.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Driver.Domain.Entities;
 using MediatR;
 using Shared.Migrations;
 
 namespace Driver.App.Queries;
 
+/// <summary>
+/// Query
+/// </summary>
 public class GetCarsQuery : IRequest<IQueryable<CarEntity>>
 {
     public class GetCarsQueryHandler : IRequestHandler<GetCarsQuery,IQueryable<CarEntity>>

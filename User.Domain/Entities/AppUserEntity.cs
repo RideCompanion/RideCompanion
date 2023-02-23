@@ -1,4 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using System.ComponentModel.DataAnnotations;
 using Shared.Core.Entities;
 
 namespace User.Domain.Entities;
@@ -35,16 +40,6 @@ public class AppUserEntity : IAuditableEntity
     /// Phone number
     /// </summary>
     public string? PhoneNumber { get; set; }
-    
-    /// <summary>
-    /// Driver Id
-    /// </summary>
-    public Guid DriverId { get; set; }
-    
-    /// <summary>
-    /// Companion Id
-    /// </summary>
-    public Guid CompanionId { get; set; }
     
     /// <summary>
     /// UserClaims

@@ -1,9 +1,17 @@
-﻿using Driver.Domain.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Driver.Domain.Entities;
 using MediatR;
 using Shared.Migrations;
 
 namespace Trip.App.Queries;
 
+/// <summary>
+/// Query
+/// </summary>
 public class GetTripsByUserIdQuery : IRequest<IQueryable<CarEntity>>
 {
     public Guid DriverId { get; set; }

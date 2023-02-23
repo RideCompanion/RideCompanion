@@ -1,11 +1,16 @@
-﻿using Companion.Domain.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Companion.Domain.Entities;
 using Driver.Domain.Entities;
 using Shared.Core.Entities;
 
 namespace Trip.Domain.Entities;
 
 /// <summary>
-/// Trip
+/// Trip entity
 /// </summary>
 public class TripEntity : BaseEntity
 {

@@ -1,4 +1,9 @@
-﻿namespace User.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+namespace User.Domain.Dto;
 
 /// <summary>
 /// Sign up Dto

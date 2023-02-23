@@ -1,4 +1,9 @@
-﻿using AutoMapper;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using AutoMapper;
 using Driver.App.Commands;
 using Driver.App.Queries;
 using Driver.Domain.Dto;
@@ -13,7 +18,7 @@ using Trip.Domain.Dto;
 namespace RideCompanion.Controllers;
 
 /// <summary>
-/// Driver
+/// Driver controller
 /// </summary>
 [Authorize]
 public class DriverController : BaseController

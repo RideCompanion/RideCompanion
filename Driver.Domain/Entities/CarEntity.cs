@@ -1,9 +1,14 @@
-﻿using Shared.Core.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Shared.Core.Entities;
 
 namespace Driver.Domain.Entities;
 
 /// <summary>
-/// Car
+/// Car entity
 /// </summary>
 public class CarEntity : IBaseEntity, IAuditableEntity
 {
@@ -13,9 +18,9 @@ public class CarEntity : IBaseEntity, IAuditableEntity
     public Guid Id { get; set; }
     
     /// <summary>
-    /// User
+    /// User Id
     /// </summary>
-    public string? UserId { get; set; }
+    public Guid UserId { get; set; }
     
     /// <summary>
     /// Driver

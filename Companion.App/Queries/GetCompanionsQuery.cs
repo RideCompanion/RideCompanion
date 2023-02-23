@@ -1,11 +1,16 @@
-﻿using Companion.Domain.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Companion.Domain.Entities;
 using MediatR;
 using Shared.Migrations;
 
 namespace Companion.App.Queries;
 
 /// <summary>
-/// Get companions query
+/// Query
 /// </summary>
 public class GetCompanionsQuery : IRequest<IQueryable<CompanionEntity>>
 {

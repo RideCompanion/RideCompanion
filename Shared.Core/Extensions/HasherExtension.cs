@@ -1,3 +1,8 @@
+/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
 using System.Security.Cryptography;
 
 namespace Shared.Core.Extensions;

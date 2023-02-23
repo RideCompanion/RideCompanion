@@ -1,7 +1,12 @@
-﻿namespace User.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+namespace User.Domain.Dto;
 
 /// <summary>
-/// Sign in Dto
+/// Sign in dto
 /// </summary>
 public class SignInDto
 {
@@ -21,5 +26,8 @@ public class SignInDto
     /// </summary>
     public string Password { get; set; }
     
+    /// <summary>
+    /// Remember me
+    /// </summary>
     public bool RememberMe { get; set; }
 }

@@ -1,4 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using System.ComponentModel.DataAnnotations;
 using Shared.Core.Entities;
 
 namespace User.Domain.Entities;

@@ -1,4 +1,9 @@
-﻿using Driver.Domain.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Driver.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Shared.Migrations;
@@ -41,7 +46,7 @@ public class CreateCarCommand : IRequest<Guid>
             {
                 Id = default,
 
-                UserId = userId,
+                UserId = Guid.Parse(userId!),
                 DriverId = command.DriverId,
                 Number = command.Number,
                 Color = command.Color,

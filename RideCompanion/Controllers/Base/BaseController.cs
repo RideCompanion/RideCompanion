@@ -1,4 +1,9 @@
-﻿using AutoMapper;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

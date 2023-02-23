@@ -1,4 +1,9 @@
-﻿using System.Data;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using System.Data;
 using System.Diagnostics;
 using AutoMapper;
 using FastReport.Utils;

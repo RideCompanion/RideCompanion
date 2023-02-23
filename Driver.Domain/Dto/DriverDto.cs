@@ -1,7 +1,12 @@
-﻿namespace Driver.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+namespace Driver.Domain.Dto;
 
 /// <summary>
-/// Driver
+/// Driver Dto
 /// </summary>
 public class DriverDto
 {

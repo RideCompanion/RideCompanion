@@ -1,4 +1,9 @@
-﻿using System.Security.Claims;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using System.Security.Claims;
 using Driver.Domain.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Http;

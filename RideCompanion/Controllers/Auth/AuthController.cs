@@ -1,11 +1,14 @@
+/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
 using System.Globalization;
 using System.Security.Claims;
 using AutoMapper;
 using Companion.App.Commands;
 using Companion.Domain.Dto;
-using Companion.Domain.Entities;
 using Driver.App.Commands;
-using Driver.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -21,7 +24,7 @@ using User.Domain.Entities;
 namespace RideCompanion.Controllers.Auth;
 
 /// <summary>
-/// 
+/// Auth controller
 /// </summary>
 public class AuthController : BaseController
 {

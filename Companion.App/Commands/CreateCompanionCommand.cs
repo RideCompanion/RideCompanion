@@ -1,4 +1,9 @@
-﻿using System.Security.Claims;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using System.Security.Claims;
 using Companion.Domain.Dto;
 using Companion.Domain.Entities;
 using MediatR;
@@ -41,6 +46,7 @@ public class CreateCompanionCommand : IRequest<Guid>
             {
                 Id = default,
                 
+                UserId = command.Dto.UserId,
                 FullName = command.Dto.FullName,
                 BirthDate = command.Dto.BirthDate,
                 PhoneNumber = command.Dto.PhoneNumber,

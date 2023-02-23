@@ -1,9 +1,17 @@
-﻿using MediatR;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using MediatR;
 using Shared.Migrations;
 using Trip.Domain.Entities;
 
 namespace Trip.App.Queries;
 
+/// <summary>
+/// Query
+/// </summary>
 public class GetTripsQuery : IRequest<IQueryable<TripEntity>>
 {
     public class GetTripsQueryHandler : IRequestHandler<GetTripsQuery,IQueryable<TripEntity>>

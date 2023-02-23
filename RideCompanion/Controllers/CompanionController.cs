@@ -1,4 +1,9 @@
-﻿using AutoMapper;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using AutoMapper;
 using Companion.App.Commands;
 using Companion.App.Queries;
 using Companion.Domain.Dto;
@@ -11,7 +16,7 @@ using RideCompanion.ViewModels;
 namespace RideCompanion.Controllers;
 
 /// <summary>
-/// Companion
+/// Companion controller
 /// </summary>
 [Authorize]
 public class CompanionController : BaseController

@@ -1,4 +1,9 @@
-﻿using System.Security.Claims;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using System.Security.Claims;
 using Driver.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -41,7 +46,7 @@ public class CreateDriverCommand : IRequest<Guid>
             var entity = new DriverEntity
             {
                 Id = default,
-                UserId = userId,
+                UserId = Guid.Parse(userId!),
                 FullName = command.FullName,
                 BirthDate = command.BirthDate,
                 CreatedById = Guid.Parse(userId!),

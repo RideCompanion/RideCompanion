@@ -1,4 +1,9 @@
-﻿using MediatR;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using MediatR;
 using Shared.Migrations;
 
 namespace Driver.App.Commands;

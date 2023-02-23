@@ -1,4 +1,9 @@
-﻿using Driver.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Driver.Domain.Dto;
 using Trip.Domain.Dto;
 
 namespace RideCompanion.ViewModels;
@@ -9,7 +14,7 @@ namespace RideCompanion.ViewModels;
 public class DriverViewModel
 {
     /// <summary>
-    /// Driver
+    /// Driver dto
     /// </summary>
     public DriverDto? DriverDto { get; set; }
         
@@ -19,7 +24,7 @@ public class DriverViewModel
     public List<DriverDto>? Drivers { get; set; }
         
     /// <summary>
-    /// Car
+    /// Car dto
     /// </summary>
     public CarDto? CarDto { get; set; }
         
@@ -29,7 +34,7 @@ public class DriverViewModel
     public List<CarDto>? Cars { get; set; }
         
     /// <summary>
-    /// Trip
+    /// Trip dto
     /// </summary>
     public TripDto? TripDto { get; set; }
         

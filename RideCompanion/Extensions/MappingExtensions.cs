@@ -1,9 +1,17 @@
-﻿using Companion.Domain.Mapping;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Companion.Domain.Mapping;
 using Driver.Domain.Mapping;
 using Trip.Domain.Mapping;
 
 namespace RideCompanion.Extensions;
 
+/// <summary>
+/// Mapping extensions
+/// </summary>
 public static class MappingExtensions
 {
     /// <summary>

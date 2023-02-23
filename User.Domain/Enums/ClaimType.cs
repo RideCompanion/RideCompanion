@@ -1,4 +1,9 @@
-﻿namespace User.Domain.Enums;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+namespace User.Domain.Enums;
 
 public enum ClaimType
 {

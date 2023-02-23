@@ -1,4 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Microsoft.EntityFrameworkCore;
 using Shared.Core.Entities;
 using Shared.Migrations;
 

@@ -1,14 +1,19 @@
-﻿using Trip.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Trip.Domain.Dto;
 
 namespace RideCompanion.ViewModels;
 
 /// <summary>
-/// Trip
+/// Trip view model
 /// </summary>
 public class TripViewModel
 {
     /// <summary>
-    /// Trip
+    /// Trip dto
     /// </summary>
     public TripDto? TripDto { get; set; }
         

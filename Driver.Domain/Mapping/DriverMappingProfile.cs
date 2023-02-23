@@ -1,9 +1,17 @@
-﻿using AutoMapper;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using AutoMapper;
 using Driver.Domain.Dto;
 using Driver.Domain.Entities;
 
 namespace Driver.Domain.Mapping;
 
+/// <summary>
+/// Driver mapping profile
+/// </summary>
 public class DriverMappingProfile : Profile
 {
     /// <summary>

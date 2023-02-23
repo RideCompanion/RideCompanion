@@ -1,10 +1,18 @@
-﻿using MediatR;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Shared.Migrations;
 using User.Domain.Entities;
 
 namespace User.App.Queries;
 
+/// <summary>
+/// Query
+/// </summary>
 public class GetUserQuery : IRequest<AppUserEntity?>
 {
     private readonly string? _email;

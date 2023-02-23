@@ -1,4 +1,9 @@
-﻿using Companion.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Companion.Domain.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Shared.Migrations;
@@ -40,6 +45,7 @@ public class UpdateCompanionCommand : IRequest<Guid>
             if (entity == null)
                 return command.Dto.Id;
 
+            entity.UserId = command.Dto.UserId;
             entity.FullName = command.Dto.FullName;
             entity.BirthDate = command.Dto.BirthDate;
             entity.PhoneNumber = command.Dto.PhoneNumber;

@@ -1,14 +1,19 @@
-﻿using Companion.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Companion.Domain.Dto;
 
 namespace RideCompanion.ViewModels;
 
 /// <summary>
-/// Trip
+/// Trip view model
 /// </summary>
 public class CompanionViewModel
 {
     /// <summary>
-    /// Companion
+    /// Companion dto
     /// </summary>
     public CompanionDto? CompanionDto { get; set; }
         

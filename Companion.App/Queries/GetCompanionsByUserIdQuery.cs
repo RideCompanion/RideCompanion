@@ -1,9 +1,17 @@
-﻿using Companion.Domain.Entities;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+using Companion.Domain.Entities;
 using MediatR;
 using Shared.Migrations;
 
 namespace Companion.App.Queries;
 
+/// <summary>
+/// Query
+/// </summary>
 public class GetCompanionsByUserIdQuery : IRequest<IQueryable<CompanionEntity>>
 {
     public GetCompanionsByUserIdQuery(Guid id)

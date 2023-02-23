@@ -1,7 +1,12 @@
-﻿namespace Companion.Domain.Dto;
+﻿/*
+ * Date: 2023-02-23
+ * Author: A.A.Konkin
+*/
+
+namespace Companion.Domain.Dto;
 
 /// <summary>
-/// Companion
+/// Companion dto
 /// </summary>
 public class CompanionDto
 {
@@ -9,6 +14,11 @@ public class CompanionDto
     /// Id
     /// </summary>
     public Guid Id { get; set; }
+    
+    /// <summary>
+    /// User Id
+    /// </summary>
+    public Guid UserId { get; init; }
     
     /// <summary>
     /// Full name

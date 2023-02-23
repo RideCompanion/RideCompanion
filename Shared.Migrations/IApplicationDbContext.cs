@@ -13,12 +13,11 @@ namespace Shared.Migrations;
 
 public interface IApplicationDbContext
 {
-    DbSet<UserEntity> Users { get; set; }
-    DbSet<UserClaimEntity> UsersClaims { get; set; }
-    DbSet<ClaimEntity> Claims { get; set; }
-    DbSet<RoleEntity> Roles { get; set; }
-    DbSet<UserRoleEntity> UserRoles { get; set; }
-        
+    public DbSet<UserEntity> Users { get; set; }
+    public DbSet<UserClaimEntity> UserClaims { get; set; }
+    public DbSet<RoleEntity> Roles { get; set; }
+    public DbSet<UserRolesEntity> UserRoles { get; set; }
+    
     DbSet<DriverEntity> Drivers { get; set; }
     DbSet<CarEntity> Cars { get; set; }
     DbSet<TripEntity> Trips { get; set; }

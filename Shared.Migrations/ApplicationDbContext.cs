@@ -5,6 +5,7 @@
 
 using Companion.Domain.Entities;
 using Driver.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Trip.Domain.Entities;
@@ -14,14 +15,13 @@ using User.Domain.Entities;
 
 namespace Shared.Migrations;
 
-public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
+public class ApplicationDbContext : IdentityDbContext<UserEntity, RoleEntity, Guid>, IApplicationDbContext
 {
-    public new DbSet<UserEntity> Users { get; set; }
-    public DbSet<UserClaimEntity> UsersClaims { get; set; }
-    public DbSet<ClaimEntity> Claims { get; set; }
-    public new DbSet<RoleEntity> Roles { get; set; }
-    public new DbSet<UserRoleEntity> UserRoles { get; set; }
-
+    public DbSet<UserEntity> Users { get; set; }
+    public DbSet<UserClaimEntity> UserClaims { get; set; }
+    public DbSet<RoleEntity> Roles { get; set; }
+    public DbSet<UserRolesEntity> UserRoles { get; set; }
+    
     public DbSet<DriverEntity> Drivers { get; set; }
     public DbSet<CarEntity> Cars { get; set; }
     public DbSet<TripEntity> Trips { get; set; }
@@ -31,19 +31,57 @@ public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
     {
     }
     
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        // Many users - many claims
-        modelBuilder.Entity<UserClaimEntity>().HasKey(sc => new { sc.UserId, sc.ClaimId });
-        
-        // Many users - many roles
-        modelBuilder.Entity<UserRoleEntity>().HasKey(sc => new { sc.UserId, sc.RoleId });
+        RenameIdentityTables(builder);
         
         // One driver - many cars
-        modelBuilder.Entity<CarEntity>()
+        builder.Entity<CarEntity>()
             .HasOne<DriverEntity>(s => s.Driver)
             .WithMany(g => g.Cars)
             .HasForeignKey(s => s.DriverId);
+    }
+
+    private void RenameIdentityTables(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        
+        builder.HasDefaultSchema("public");
+        
+        builder.Entity<UserEntity>(entity =>
+        {
+            entity.ToTable(name: "Users");
+        });
+        
+        builder.Entity<RoleEntity>(entity =>
+        {
+            entity.ToTable(name: "Roles");
+        });
+        
+        builder.Entity<UserRolesEntity>(entity =>
+        {
+            entity.ToTable("UserRoles");
+        });
+        
+        builder.Entity<UserClaimEntity>(entity =>
+        {
+            entity.ToTable("UserClaims");
+        });
+        
+        builder.Entity<IdentityUserLogin<Guid>>(entity =>
+        {
+            entity.ToTable("UserLogins");
+        });
+        
+        builder.Entity<IdentityRoleClaim<Guid>>(entity =>
+        {
+            entity.ToTable("RoleClaims");
+        });
+        
+        builder.Entity<IdentityUserToken<Guid>>(entity =>
+        {
+            entity.ToTable("UserTokens");
+        });
     }
 
     public new async Task<int> SaveChanges()

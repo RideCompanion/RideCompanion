@@ -3,19 +3,16 @@
  * Author: A.A.Konkin
 */
 
-using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 using Shared.Abstractions.Entities;
 
 namespace User.Domain.Entities;
 
-public class UserEntity : IBaseEntity
+/// <summary>
+/// User entity
+/// </summary>
+public class UserEntity : IdentityUser<Guid>, IBaseEntity
 {
-    /// <summary>
-    /// Id
-    /// </summary>
-    [Key]
-    public Guid Id { get; set; }
-    
     /// <summary>
     /// Full User Name
     /// </summary>
@@ -30,26 +27,6 @@ public class UserEntity : IBaseEntity
     /// Date of birth
     /// </summary>
     public DateTime DateOfBirth { get; set; }
-    
-    /// <summary>
-    /// Email
-    /// </summary>
-    public string? Email { get; set; }
-    
-    /// <summary>
-    /// Phone number
-    /// </summary>
-    public string? PhoneNumber { get; set; }
-    
-    /// <summary>
-    /// User claims
-    /// </summary>
-    public IList<UserClaimEntity>? Claims { get; set; }
-    
-    /// <summary>
-    /// User roles
-    /// </summary>
-    public ICollection<RoleEntity> Roles { get; set; }
 
     /// <summary>
     /// Id created user

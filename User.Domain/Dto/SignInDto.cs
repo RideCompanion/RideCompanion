@@ -10,12 +10,6 @@ namespace User.Domain.Dto;
 /// </summary>
 public class SignInDto
 {
-    public SignInDto(string email, string password)
-    {
-        Email = email;
-        Password = password;
-    }
-
     /// <summary>
     /// User name
     /// </summary>

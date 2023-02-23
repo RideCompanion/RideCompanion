@@ -13,7 +13,7 @@ namespace User.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetUserQuery : IRequest<AppUserEntity?>
+public class GetUserQuery : IRequest<UserEntity?>
 {
     private readonly string? _email;
     private readonly string? _password;
@@ -24,7 +24,7 @@ public class GetUserQuery : IRequest<AppUserEntity?>
         _password = password;
     }
 
-    public class GetUserCommandHandler : IRequestHandler<GetUserQuery, AppUserEntity?>
+    public class GetUserCommandHandler : IRequestHandler<GetUserQuery, UserEntity?>
     {
         private readonly IApplicationDbContext _context;
 
@@ -33,9 +33,9 @@ public class GetUserQuery : IRequest<AppUserEntity?>
             _context = context;
         }
 
-        public async Task<AppUserEntity?> Handle(GetUserQuery query, CancellationToken cancellationToken)
+        public async Task<UserEntity?> Handle(GetUserQuery query, CancellationToken cancellationToken)
         {
-            var data = await _context.AppUsers.FirstOrDefaultAsync(d =>
+            var data = await _context.Users.FirstOrDefaultAsync(d =>
                     d.Email == query._email
                     && d.Password == query._password,
                 cancellationToken: cancellationToken);

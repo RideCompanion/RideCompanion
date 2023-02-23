@@ -46,7 +46,6 @@ public class CreateCarCommand : IRequest<Guid>
             {
                 Id = default,
 
-                UserId = Guid.Parse(userId!),
                 DriverId = command.DriverId,
                 Number = command.Number,
                 Color = command.Color,

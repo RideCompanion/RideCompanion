@@ -7,9 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Shared.Abstractions\Shared.Abstractions.csproj" />
-      <ProjectReference Include="..\Shared.Migrations\Shared.Migrations.csproj" />
-      <ProjectReference Include="..\Shared.Core\Shared.Core.csproj" />
+        <PackageReference Include="AutoMapper" Version="12.0.1" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     </ItemGroup>
-
+    
 </Project>

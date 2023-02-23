@@ -3,14 +3,14 @@
  * Author: A.A.Konkin
 */
 
-using Shared.Core.Entities;
+using Shared.Abstractions.Entities;
 
 namespace Driver.Domain.Entities;
 
 /// <summary>
 /// Car entity
 /// </summary>
-public class CarEntity : IBaseEntity, IAuditableEntity
+public class CarEntity : IBaseEntity
 {
     /// <summary>
     /// Id
@@ -18,14 +18,10 @@ public class CarEntity : IBaseEntity, IAuditableEntity
     public Guid Id { get; set; }
     
     /// <summary>
-    /// User Id
-    /// </summary>
-    public Guid UserId { get; set; }
-    
-    /// <summary>
     /// Driver
     /// </summary>
     public Guid DriverId { get; set; }
+    public DriverEntity Driver { get; set; }
     
     /// <summary>
     /// Car number

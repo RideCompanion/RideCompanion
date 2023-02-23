@@ -13,7 +13,7 @@ namespace User.App.Commands;
 /// <summary>
 /// Command
 /// </summary>
-public class CreateUserCommand : IRequest<AppUserEntity>
+public class CreateUserCommand : IRequest<UserEntity>
 {
     private SignUpDto Dto { get; }
         
@@ -25,7 +25,7 @@ public class CreateUserCommand : IRequest<AppUserEntity>
     /// <summary>
     /// Handler
     /// </summary>
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, AppUserEntity>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, UserEntity>
     {
         private readonly IApplicationDbContext _context;
         
@@ -34,12 +34,12 @@ public class CreateUserCommand : IRequest<AppUserEntity>
             _context = context;
         }
         
-        public async Task<AppUserEntity> Handle(CreateUserCommand command, CancellationToken cancellationToken)
+        public async Task<UserEntity> Handle(CreateUserCommand command, CancellationToken cancellationToken)
         {
             if (command.Dto is null)
                 throw new Exception();
                 
-            var entity = new AppUserEntity
+            var entity = new UserEntity
             {
                 Id = default,
                     
@@ -56,7 +56,7 @@ public class CreateUserCommand : IRequest<AppUserEntity>
                 IsDeleted = false
             };
             
-            var result = await _context.AppUsers.AddAsync(entity, cancellationToken);
+            var result = await _context.Users.AddAsync(entity, cancellationToken);
             await _context.SaveChanges();
                 
             return result.Entity;

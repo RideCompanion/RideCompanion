@@ -3,9 +3,9 @@
  * Author: A.A.Konkin
 */
 
-namespace Shared.Core.Entities;
+namespace Shared.Abstractions.Entities;
 
-public interface IBaseEntity
+public interface IBaseEntity : IAuditableEntity
 {
     /// <summary>
     /// Id

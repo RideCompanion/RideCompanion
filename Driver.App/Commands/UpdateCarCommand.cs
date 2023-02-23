@@ -16,11 +16,12 @@ namespace Driver.App.Commands;
 /// </summary>
 public class UpdateCarCommand : IRequest<Guid>
 {
-    // ----------------------------
-    // Props
-    // ----------------------------
-    public Guid CarId { get; set; }
-    public CarDto? CarDto { get; set; }
+    private CarDto CarDto { get; set; }
+
+    public UpdateCarCommand(CarDto carDto)
+    {
+        CarDto = carDto;
+    }
     
     /// <summary>
     /// Handler
@@ -38,27 +39,24 @@ public class UpdateCarCommand : IRequest<Guid>
         
         public async Task<Guid> Handle(UpdateCarCommand command, CancellationToken cancellationToken)
         {
-            var entity = _context.Cars.FirstOrDefault(e => e.Id == command.CarId);
+            var entity = _context.Cars.FirstOrDefault(e => e.Id == command.CarDto.Id);
             var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
             
             if (entity != null)
             {
-                entity.UserId = Guid.Parse(userId!);
-                entity.Number = command.CarDto?.Number;
-                entity.Color = command.CarDto?.Color;
-                entity.Model = command.CarDto?.Model;
+                entity.DriverId = command.CarDto.DriverId;
+                entity.Number = command.CarDto.Number;
+                entity.Color = command.CarDto.Color;
+                entity.Model = command.CarDto.Model;
                 entity.UpdateById = Guid.Parse(userId!);
                 entity.UpdateDate = DateTime.Now;
-                    
-                if (command.CarDto != null) 
-                    entity.IsDeleted = command.CarDto.IsDeleted;
 
                 _context.Cars.Update(entity);
                 await _context.SaveChanges();
                 return entity.Id;
             }
 
-            return command.CarId;
+            return command.CarDto.Id;
         }
     }
 }

@@ -7,10 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Driver.Domain\Driver.Domain.csproj" />
-      <ProjectReference Include="..\Shared.Core\Shared.Core.csproj" />
-      <ProjectReference Include="..\Trip.Domain\Trip.Domain.csproj" />
-      <ProjectReference Include="..\User.Domain\User.Domain.csproj" />
+        <ProjectReference Include="..\Companion.Domain\Companion.Domain.csproj" />
+        <ProjectReference Include="..\Driver.Domain\Driver.Domain.csproj" />
+        <ProjectReference Include="..\Shared.Core\Shared.Core.csproj" />
+        <ProjectReference Include="..\Trip.Domain\Trip.Domain.csproj" />
+        <ProjectReference Include="..\User.Domain\User.Domain.csproj" />
     </ItemGroup>
-
+    
 </Project>

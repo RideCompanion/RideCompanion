@@ -131,7 +131,7 @@ public class AuthController : BaseController
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    private async Task<AppUserEntity> CreateUser(SignUpDto dto)
+    private async Task<UserEntity> CreateUser(SignUpDto dto)
     {
         return await Mediator.Send(new CreateUserCommand(dto));
     }

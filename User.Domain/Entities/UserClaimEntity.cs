@@ -4,14 +4,14 @@
 */
 
 using System.ComponentModel.DataAnnotations;
-using Shared.Core.Entities;
+using Shared.Abstractions.Entities;
 
 namespace User.Domain.Entities;
 
 /// <summary>
 /// App User Claim Entity
 /// </summary>
-public class AppUserClaimEntity : IAuditableEntity
+public class UserClaimEntity : IBaseEntity
 {
     /// <summary>
     /// Id
@@ -22,8 +22,8 @@ public class AppUserClaimEntity : IAuditableEntity
     /// <summary>
     /// App user Id
     /// </summary>
-    public Guid AppUserId { get; set; }
-    public AppUserEntity? AppUser { get; set; }
+    public Guid UserId { get; set; }
+    public UserEntity? User { get; set; }
     
     /// <summary>
     /// Claim Id

@@ -7,12 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="11.1.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Shared.Migrations\Shared.Migrations.csproj" />
-      <ProjectReference Include="..\User.Domain\User.Domain.csproj" />
+        <ProjectReference Include="..\Shared.Core\Shared.Core.csproj" />
+        <ProjectReference Include="..\Shared.Migrations\Shared.Migrations.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,58 +1,14 @@
-﻿/*
- * Date: 2023-02-23
- * Author: A.A.Konkin
-*/
-
-using System.ComponentModel.DataAnnotations;
-using Shared.Abstractions.Entities;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace User.Domain.Entities;
 
 /// <summary>
-/// App User Claim Entity
+/// Role entity
 /// </summary>
-public class UserClaimEntity : IBaseEntity
+public class UserClaimEntity : IdentityUserClaim<Guid>
 {
     /// <summary>
-    /// Id
+    /// Role description
     /// </summary>
-    [Key]
-    public Guid Id { get; set; }
-    
-    /// <summary>
-    /// App user Id
-    /// </summary>
-    public Guid UserId { get; set; }
-    public UserEntity? User { get; set; }
-    
-    /// <summary>
-    /// Claim Id
-    /// </summary>
-    public Guid ClaimId { get; set; }
-    public ClaimEntity? Claim { get; set; }
-
-    /// <summary>
-    /// Id created user
-    /// </summary>
-    public Guid CreatedById { get; set; }
-
-    /// <summary>
-    /// Created date
-    /// </summary>
-    public DateTime CreateDate { get; set; }
-
-    /// <summary>
-    /// Id updated user
-    /// </summary>
-    public Guid UpdateById { get; set; }
-
-    /// <summary>
-    /// Update date
-    /// </summary>
-    public DateTime UpdateDate { get; set; }
-
-    /// <summary>
-    /// Is deleted flag
-    /// </summary>
-    public bool IsDeleted { get; set; }
+    public string Description { get; set; }
 }

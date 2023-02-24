@@ -3,6 +3,7 @@
  * Author: A.A.Konkin
 */
 
+using System.Diagnostics;
 using System.Globalization;
 using System.Security.Claims;
 using AutoMapper;
@@ -30,9 +31,11 @@ public class AuthController : BaseController
 {
     private readonly ILogger<AuthController> _logger;
     private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
 
-    public AuthController(IMediator mediator, IMapper mapper, ILogger<AuthController> logger) : base(mediator, mapper)
+    public AuthController(IMediator mediator, IMapper mapper, ILogger<AuthController> logger)
     {
+        _mediator = mediator;
         _mapper = mapper;
         _logger = logger;
     }
@@ -50,10 +53,13 @@ public class AuthController : BaseController
     [HttpPost]
     public async Task<IActionResult> SignIn(SignInDto dto)
     {
+        var response = await _mediator.Send(new Ping());
+        Debug.WriteLine(response); // "Pong"
+        
         if (dto.Email.IsNullOrEmpty() || dto.Password.IsNullOrEmpty())
             return (IActionResult)Results.BadRequest("Email or password is not set");
 
-        var user = await Mediator.Send(new GetUserQuery(dto.Email, HasherExtension.HashString(dto.Password)));
+        var user = await _mediator.Send(new GetUserQuery(dto.Email, HasherExtension.HashString(dto.Password)));
 
         if (user is null)
             return (IActionResult)Results.Unauthorized();
@@ -110,7 +116,7 @@ public class AuthController : BaseController
         if (dto.Email.IsNullOrEmpty() || dto.Password.IsNullOrEmpty())
             return (IActionResult)Results.BadRequest("Email or password is not set");
         
-        var user = await Mediator.Send(new GetUserQuery(dto.Email!, HasherExtension.HashString(dto.Password!)));
+        var user = await _mediator.Send(new GetUserQuery(dto.Email!, HasherExtension.HashString(dto.Password!)));
         
         if(user != null)
             return View(dto);
@@ -133,7 +139,7 @@ public class AuthController : BaseController
     /// <returns></returns>
     private async Task<UserEntity> CreateUser(SignUpDto dto)
     {
-        return await Mediator.Send(new CreateUserCommand(dto));
+        return await _mediator.Send(new CreateUserCommand(dto));
     }
     
     /// <summary>
@@ -151,7 +157,7 @@ public class AuthController : BaseController
             PhoneNumber = dto.PhoneNumber,
         };
         
-        return await Mediator.Send(new CreateCompanionCommand(newCompanionDto));
+        return await _mediator.Send(new CreateCompanionCommand(newCompanionDto));
     }
     
     /// <summary>
@@ -161,7 +167,7 @@ public class AuthController : BaseController
     /// <returns></returns>
     private async Task<Guid> CreateDriver(SignUpDto dto)
     {
-        return await Mediator.Send(new CreateDriverCommand(dto.FullUserName, dto.DateOfBirth));
+        return await _mediator.Send(new CreateDriverCommand(dto.FullUserName, dto.DateOfBirth));
     }
 
     /// <summary>

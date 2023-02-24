@@ -6,18 +6,19 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
+using User.Domain.Entities;
 
 namespace RideCompanion.Areas.Identity.Pages.Account;
 
 public class LoginWith2faModel : PageModel
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<UserEntity> _signInManager;
+    private readonly UserManager<UserEntity> _userManager;
     private readonly ILogger<LoginWith2faModel> _logger;
 
     public LoginWith2faModel(
-        SignInManager<IdentityUser> signInManager,
-        UserManager<IdentityUser> userManager,
+        SignInManager<UserEntity> signInManager,
+        UserManager<UserEntity> userManager,
         ILogger<LoginWith2faModel> logger)
     {
         _signInManager = signInManager;

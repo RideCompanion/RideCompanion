@@ -22,8 +22,13 @@ namespace RideCompanion.Controllers;
 [Authorize]
 public class TripController : BaseController
 {
-    public TripController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+    private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
+    
+    public TripController(IMediator mediator, IMapper mapper)
     {
+        _mediator = mediator;
+        _mapper = mapper;
     }
     
     /// <summary>
@@ -32,11 +37,11 @@ public class TripController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> Index()
     {
-        var data = await Mediator.Send(new GetTripsQuery());
+        var data = await _mediator.Send(new GetTripsQuery());
         
         var viewModel = new TripViewModel
         {
-            Trips = Mapper.Map<List<TripDto>>(data)
+            Trips = _mapper.Map<List<TripDto>>(data)
         };
             
         return View(viewModel);
@@ -49,7 +54,7 @@ public class TripController : BaseController
     /// <returns></returns>
     public async Task<IActionResult> GetTripById(Guid id)
     {
-        var data = await Mediator.Send(new GetTripByIdQuery(id));
+        var data = await _mediator.Send(new GetTripByIdQuery(id));
         return Json(data);
     }
 
@@ -63,7 +68,7 @@ public class TripController : BaseController
     {
         var director = new TripDirector(new TripBuilder());
         var trip = director.BuildFullTrip(viewModel.TripDto!);
-        await Mediator.Send(new CreateTripCommand(trip));
+        await _mediator.Send(new CreateTripCommand(trip));
         return RedirectToAction("Index");
     }
 
@@ -74,7 +79,7 @@ public class TripController : BaseController
     /// <returns></returns>
     public async Task<IActionResult> UpdateTrip(TripViewModel viewModel)
     {
-        await Mediator.Send(new UpdateTripCommand(viewModel.TripDto!));
+        await _mediator.Send(new UpdateTripCommand(viewModel.TripDto!));
         return RedirectToAction("Index");
     }
 
@@ -85,7 +90,7 @@ public class TripController : BaseController
     /// <returns></returns>
     public async Task<IActionResult> DeleteTrip(Guid id)
     {
-        await Mediator.Send(new DeleteTripCommand(id));
+        await _mediator.Send(new DeleteTripCommand(id));
         return RedirectToAction("Index");
     }
 }

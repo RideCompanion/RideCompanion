@@ -23,8 +23,13 @@ namespace RideCompanion.Controllers;
 [Authorize]
 public class DriverController : BaseController
 {
-    public DriverController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+    private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
+
+    public DriverController(IMediator mediator, IMapper mapper)
     {
+        _mediator = mediator;
+        _mapper = mapper;
     }
 
     /// <summary>
@@ -33,11 +38,11 @@ public class DriverController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> Index()
     {
-        var data = await Mediator.Send(new GetDriversQuery());
+        var data = await _mediator.Send(new GetDriversQuery());
 
         var viewModel = new DriverViewModel
         {
-            Drivers = Mapper.Map<List<DriverDto>>(data)
+            Drivers = _mapper.Map<List<DriverDto>>(data)
         };
 
         return View(viewModel);
@@ -50,7 +55,7 @@ public class DriverController : BaseController
     /// <returns> Driver entity </returns>
     public async Task<IActionResult> GetDriverById(Guid id)
     {
-        var data = await Mediator.Send(new GetDriverByIdQuery
+        var data = await _mediator.Send(new GetDriverByIdQuery
         {
             Id = id
         });
@@ -67,7 +72,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> CreateDriver(DriverViewModel viewModel)
     {
-        await Mediator.Send(new CreateDriverCommand(viewModel.DriverDto!.FullName, viewModel.DriverDto.BirthDate));
+        await _mediator.Send(new CreateDriverCommand(viewModel.DriverDto!.FullName, viewModel.DriverDto.BirthDate));
 
         return RedirectToAction("Index");
     }
@@ -79,7 +84,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> UpdateDriver(DriverViewModel viewModel)
     {
-        await Mediator.Send(new UpdateDriverCommand
+        await _mediator.Send(new UpdateDriverCommand
         {
             DriverId = viewModel.DriverDto!.Id,
             DriverDto = viewModel.DriverDto
@@ -95,7 +100,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> DeleteDriver(Guid id)
     {
-        await Mediator.Send(new DeleteDriverCommand
+        await _mediator.Send(new DeleteDriverCommand
         {
             DriverId = id
         });
@@ -110,26 +115,26 @@ public class DriverController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> DriverDetail(Guid driverId)
     {
-        var driverData = await Mediator.Send(new GetDriverByIdQuery
+        var driverData = await _mediator.Send(new GetDriverByIdQuery
         {
             Id = driverId
         });
 
-        var carList = await Mediator.Send(new GetCarsByDriverIdQuery
+        var carList = await _mediator.Send(new GetCarsByDriverIdQuery
         {
             DriverId = driverId
         });
             
-        var tripList = await Mediator.Send(new GetTripsByDriverIdQuery
+        var tripList = await _mediator.Send(new GetTripsByDriverIdQuery
         {
             DriverId = driverId
         });
 
         var viewModel = new DriverViewModel
         {
-            DriverDto = Mapper.Map<DriverDto>(driverData),
-            Cars = Mapper.Map<List<CarDto>>(carList),
-            Trips = Mapper.Map<List<TripDto>>(tripList)
+            DriverDto = _mapper.Map<DriverDto>(driverData),
+            Cars = _mapper.Map<List<CarDto>>(carList),
+            Trips = _mapper.Map<List<TripDto>>(tripList)
         };
 
         return View(viewModel);
@@ -146,7 +151,7 @@ public class DriverController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> Cars(Guid driverId)
     {
-        var data = await Mediator.Send(new GetCarsByDriverIdQuery
+        var data = await _mediator.Send(new GetCarsByDriverIdQuery
         {
             DriverId = driverId
         });
@@ -167,7 +172,7 @@ public class DriverController : BaseController
     /// <returns> Car entity </returns>
     public async Task<IActionResult> GetCarById(Guid id)
     {
-        var data = await Mediator.Send(new GetCarByIdQuery
+        var data = await _mediator.Send(new GetCarByIdQuery
         {
             Id = id
         });
@@ -184,7 +189,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> CreateCar(DriverViewModel viewModel)
     {
-        await Mediator.Send(new CreateCarCommand
+        await _mediator.Send(new CreateCarCommand
         {
             DriverId = viewModel.DriverDto!.Id,
             Number = viewModel.CarDto!.Number,
@@ -202,7 +207,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> UpdateCar(DriverViewModel viewModel)
     {
-        await Mediator.Send(new UpdateCarCommand(viewModel.CarDto!));
+        await _mediator.Send(new UpdateCarCommand(viewModel.CarDto!));
 
         return RedirectToAction("DriverDetail", viewModel.CarDto!.DriverId);
     }
@@ -214,7 +219,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> DeleteCar(Guid id)
     {
-        await Mediator.Send(new DeleteCarCommand
+        await _mediator.Send(new DeleteCarCommand
         {
             CarId = id
         });

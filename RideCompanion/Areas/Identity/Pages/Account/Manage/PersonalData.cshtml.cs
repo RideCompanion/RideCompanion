@@ -4,15 +4,16 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using User.Domain.Entities;
 
 namespace RideCompanion.Areas.Identity.Pages.Account.Manage;
 
 public class PersonalDataModel : PageModel
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<UserEntity> _userManager;
 
     public PersonalDataModel(
-        UserManager<IdentityUser> userManager,
+        UserManager<UserEntity> userManager,
         ILogger<PersonalDataModel> logger)
     {
         _userManager = userManager;

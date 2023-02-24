@@ -1,12 +1,9 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RideCompanion.Extensions;
 using Shared.Migrations;
 using Trip.App.TripBuilder;
 using User.Domain.Entities;
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,15 +22,6 @@ builder.Services.AddMediatR(MediatRConfigurationExtension.Configuration());
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ITripBuilder, TripBuilder>();
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-        options.SlidingExpiration = true;
-        options.AccessDeniedPath = "/Forbidden/";
-        options.LoginPath = "/Auth/SignIn";
-    });
 
 var app = builder.Build();
 

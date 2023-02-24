@@ -3,7 +3,6 @@
  * Author: A.A.Konkin
 */
 
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace RideCompanion.Controllers.Base;

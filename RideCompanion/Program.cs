@@ -7,17 +7,22 @@ using User.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                       ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options
-    => options.UseNpgsql(connectionString));
+var connectionString = 
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<UserEntity, RoleEntity>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
+
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 MappingExtensions.AutoMapperExtensions(builder);
+
 builder.Services.AddMediatR(MediatRConfigurationExtension.Configuration());
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();

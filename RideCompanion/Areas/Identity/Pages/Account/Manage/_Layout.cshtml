@@ -10,18 +10,19 @@
     }
 }
 
-<h1>Manage your account</h1>
+<h2 class="text-4xl font-bold dark:text-white">@ViewBag.Title</h2>
+<p class="font-normal text-gray-500 dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
+<hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
-<div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
+<div class="flex min-h-screen w-full flex-row space-x-2">
+    <div class="w-4/12 max-w-sm rounded-md border border-gray-200 bg-white p-4 shadow dark:border-gray-700 dark:bg-gray-800">
+        <div class="overflow-y-auto">
+            <partial name="_ManageNav"/>
         </div>
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
+    </div>
+
+    <div class="flex flex-col w-full p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+        @RenderBody()
     </div>
 </div>
 

@@ -19,7 +19,7 @@
     <h5 class="text-xl font-bold dark:text-white">Driver</h5>
     <div class="flex flex-row space-x-2">
         <p class="text-gray-400">FullName:</p>
-        <p class="text-gray-800">@Model.DriverDto!.FullName</p>
+        <p class="text-gray-800">@Model.DriverDto.FullName</p>
     </div>
     <div class="flex flex-row space-x-2">
         <p class="text-gray-400">BirthDate:</p>
@@ -128,7 +128,7 @@
                         @item.DateTime
                     </td>
                     <td class="px-6 py-4 text-right space-x-1">
-                        <a onclick="UpdateTripData('@item.Id')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        <a onclick="UpdateCarData('@item.Id')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             Edit
                         </a>
                         <a asp-controller="Trip" asp-action="DeleteTrip" asp-route-id="@item.Id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
@@ -176,6 +176,7 @@
             .then((response) => response.json())
             .then((response) => {
                 document.getElementById('UpdateCarId').value = response.id;
+                document.getElementById('UpdateCarDriverId').value = response.driverId;
                 document.getElementById('UpdateCarNumber').value = response.number;
                 document.getElementById('UpdateCarColor').value = response.color;
                 document.getElementById('UpdateCarModel').value = response.model;

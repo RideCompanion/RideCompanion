@@ -63,7 +63,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> CreateDriver(DriverViewModel viewModel)
     {
-        await _mediator.Send(new CreateDriverCommand(viewModel.DriverDto!.FullName, viewModel.DriverDto.BirthDate));
+        await _mediator.Send(new CreateDriverCommand(viewModel.DriverDto.FullName, viewModel.DriverDto.BirthDate));
 
         return RedirectToAction("Index");
     }
@@ -77,7 +77,7 @@ public class DriverController : BaseController
     {
         await _mediator.Send(new UpdateDriverCommand
         {
-            DriverId = viewModel.DriverDto!.Id,
+            DriverId = viewModel.DriverDto.Id,
             DriverDto = viewModel.DriverDto
         });
 
@@ -125,8 +125,11 @@ public class DriverController : BaseController
     /// </summary>
     /// <param name="id"> Car Id </param>
     /// <returns> Car entity </returns>
-    public async Task<IActionResult> GetCarById(Guid id) => 
-        Json(await _mediator.Send(new GetCarByIdQuery(id)));
+    public async Task<IActionResult> GetCarById(Guid id)
+    {
+        var data = await _mediator.Send(new GetCarByIdQuery(id));
+        return Json(data);
+    }
 
     /// <summary>
     /// Create
@@ -137,13 +140,13 @@ public class DriverController : BaseController
     {
         await _mediator.Send(new CreateCarCommand
         {
-            DriverId = viewModel.DriverDto!.Id,
-            Number = viewModel.CarDto!.Number,
+            DriverId = viewModel.DriverDto.Id,
+            Number = viewModel.CarDto.Number,
             Color = viewModel.CarDto.Color,
             Model = viewModel.CarDto.Model
         });
 
-        return RedirectToAction("DriverDetail", new {id = viewModel.DriverDto.Id});
+        return RedirectToAction("DriverDetail", new {id = viewModel.CarDto.Id});
     }
 
     /// <summary>
@@ -153,9 +156,9 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> UpdateCar(DriverViewModel viewModel)
     {
-        await _mediator.Send(new UpdateCarCommand(viewModel.CarDto!));
+        await _mediator.Send(new UpdateCarCommand(viewModel.CarDto));
 
-        return RedirectToAction("DriverDetail", viewModel.CarDto!.DriverId);
+        return RedirectToAction("DriverDetail", new {id = viewModel.CarDto.DriverId});
     }
 
     /// <summary>
@@ -170,6 +173,6 @@ public class DriverController : BaseController
             CarId = id
         });
 
-        return RedirectToAction("DriverDetail", id);
+        return RedirectToAction("DriverDetail", new {id});
     }
 }

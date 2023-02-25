@@ -111,23 +111,23 @@ public class DriverController : BaseController
     /// <summary>
     /// Driver details
     /// </summary>
-    /// <param name="driverId"> Driver id </param>
+    /// <param name="id"> Driver id </param>
     /// <returns> View </returns>
-    public async Task<IActionResult> DriverDetail(Guid driverId)
+    public async Task<IActionResult> DriverDetail([FromRoute]Guid id)
     {
         var driverData = await _mediator.Send(new GetDriverByIdQuery
         {
-            Id = driverId
+            Id = id
         });
 
         var carList = await _mediator.Send(new GetCarsByDriverIdQuery
         {
-            DriverId = driverId
+            DriverId = id
         });
             
         var tripList = await _mediator.Send(new GetTripsByDriverIdQuery
         {
-            DriverId = driverId
+            DriverId = id
         });
 
         var viewModel = new DriverViewModel
@@ -143,27 +143,6 @@ public class DriverController : BaseController
     // -------------------------------------------
     // Car
     // -------------------------------------------
-
-    /// <summary>
-    /// Cars
-    /// </summary>
-    /// <param name="driverId"> Driver id </param>
-    /// <returns> View </returns>
-    public async Task<IActionResult> Cars(Guid driverId)
-    {
-        var data = await _mediator.Send(new GetCarsByDriverIdQuery
-        {
-            DriverId = driverId
-        });
-
-        if (data.Any())
-        {
-            ViewData["data"] = data.ToList();
-        }
-
-        return View();
-    }
-
 
     /// <summary>
     /// Get car by Id
@@ -197,7 +176,7 @@ public class DriverController : BaseController
             Model = viewModel.CarDto.Model
         });
 
-        return RedirectToAction("DriverDetail", viewModel.DriverDto.Id);
+        return RedirectToAction("DriverDetail", new {id = viewModel.DriverDto.Id});
     }
 
     /// <summary>

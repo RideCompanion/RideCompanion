@@ -13,9 +13,5 @@
         <ProjectReference Include="..\Trip.Domain\Trip.Domain.csproj" />
         <ProjectReference Include="..\User.Domain\User.Domain.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Migrations" />
-    </ItemGroup>
     
 </Project>

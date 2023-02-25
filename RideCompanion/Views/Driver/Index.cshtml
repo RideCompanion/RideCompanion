@@ -50,7 +50,7 @@
                         @item.BirthDate
                     </td>
                     <td class="px-6 py-4 text-right space-x-1">
-                        <a asp-controller="Driver" asp-action="DriverDetail" asp-route-driverId="@item.Id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                        <a asp-controller="Driver" asp-action="DriverDetail" asp-route-id="@item.Id" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             Details
                         </a>
                         <a onclick="UpdateData('@item.Id')" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">

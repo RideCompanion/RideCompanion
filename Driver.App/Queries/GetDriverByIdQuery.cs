@@ -13,23 +13,23 @@ namespace Driver.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetDriverByIdQuery : IRequest<DriverEntity?>
+public record GetDriverByIdQuery(
+    Guid Id
+) : IRequest<DriverEntity?>;
+
+public class GetDriverByIdQueryHandler : IRequestHandler<GetDriverByIdQuery, DriverEntity?>
 {
-    public Guid Id { get; set; }
-    
-    public class GetDriverByIdQueryHandler : IRequestHandler<GetDriverByIdQuery, DriverEntity?>
+    private readonly IApplicationDbContext _context;
+
+    public GetDriverByIdQueryHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
+        _context = context;
+    }
 
-        public GetDriverByIdQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<DriverEntity?> Handle(GetDriverByIdQuery query, CancellationToken cancellationToken)
-        {
-            var entity = await _context.Drivers.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
-            return entity;
-        }
+    public async Task<DriverEntity?> Handle(GetDriverByIdQuery query, CancellationToken cancellationToken)
+    {
+        var entity =
+            await _context.Drivers.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
+        return entity;
     }
 }

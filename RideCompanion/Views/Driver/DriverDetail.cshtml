@@ -12,7 +12,6 @@
 @await Html.PartialAsync("_CreateCar", Model)
 @await Html.PartialAsync("_UpdateCar", Model)
 @await Html.PartialAsync("_UpdateDriver", Model)
-@await Html.PartialAsync("_UpdateTrip", Model)
 
 <a asp-controller="Driver" asp-action="Index"> Back </a>
 
@@ -176,14 +175,10 @@
         fetch('/Driver/GetCarById?Id=' + id)
             .then((response) => response.json())
             .then((response) => {
-				const id = document.getElementById('UpdateCarId');
-                const number = document.getElementById('UpdateCarNumber');
-                const color = document.getElementById('UpdateCarColor');
-                const model = document.getElementById('UpdateCarModel');
-                id.value = response.id;
-                number.value = response.number;
-                color.value = response.color;
-                model.value = response.model;
+                document.getElementById('UpdateCarId').value = response.id;
+                document.getElementById('UpdateCarNumber').value = response.number;
+                document.getElementById('UpdateCarColor').value = response.color;
+                document.getElementById('UpdateCarModel').value = response.model;
             });
     }
     
@@ -194,30 +189,9 @@
         fetch('/Driver/GetDriverById?Id=' + id)
             .then((response) => response.json())
             .then((response) => {
-				const id = document.getElementById('UpdateDriverId');
-                const fullName = document.getElementById('UpdateDriverFullName');
-                const birth = document.getElementById('UpdateDriverBirthDate');
-                id.value = response.id;
-                fullName.value = response.fullName;
-                birth.value = response.birthDate.substring(0, 10);
-            });
-    }
-        
-    function UpdateTripData(id) {
-        const form = document.getElementById('drawer-trip-update');
-        const drawer = new Drawer(form, options);
-        drawer.toggle();
-        fetch('/Trip/GetTripById?Id=' + id)
-            .then((response) => response.json())
-            .then((response) => {
-				const id = document.getElementById('UpdateTripId');
-				const addressFrom = document.getElementById('UpdateTripAddressFrom');
-                const addressTo = document.getElementById('UpdateTripAddressTo');
-                const dateTime = document.getElementById('UpdateTripDateTime');
-                id.value = response.id;
-                addressFrom.value = response.addressFrom;
-                addressTo.value = response.addressTo;
-                dateTime.value = response.dateTime.substring(0, 10);
+                document.getElementById('UpdateDriverId').value = response.id;
+                document.getElementById('UpdateDriverFullName').value = response.fullName;
+                document.getElementById('UpdateDriverBirthDate').value = response.birthDate.substring(0, 10);
             });
     }
 

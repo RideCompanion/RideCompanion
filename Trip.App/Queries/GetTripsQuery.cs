@@ -12,19 +12,20 @@ namespace Trip.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetTripsQuery : IRequest<IQueryable<TripEntity>>
+public record GetTripsQuery : IRequest<IQueryable<TripEntity>>;
+
+public class GetTripsQueryHandler : IRequestHandler<GetTripsQuery, IQueryable<TripEntity>>
 {
-    public class GetTripsQueryHandler : IRequestHandler<GetTripsQuery,IQueryable<TripEntity>>
+    private readonly IApplicationDbContext _context;
+
+    public GetTripsQueryHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
-        public GetTripsQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-        public Task<IQueryable<TripEntity>> Handle(GetTripsQuery query, CancellationToken cancellationToken)
-        {
-            var data = _context.Trips.Where(d => true);
-            return Task.FromResult(data);
-        }
+        _context = context;
+    }
+
+    public Task<IQueryable<TripEntity>> Handle(GetTripsQuery query, CancellationToken cancellationToken)
+    {
+        var data = _context.Trips.Where(d => true);
+        return Task.FromResult(data);
     }
 }

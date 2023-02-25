@@ -53,17 +53,8 @@ public class DriverController : BaseController
     /// </summary>
     /// <param name="id"> Driver Id </param>
     /// <returns> Driver entity </returns>
-    public async Task<IActionResult> GetDriverById(Guid id)
-    {
-        var data = await _mediator.Send(new GetDriverByIdQuery
-        {
-            Id = id
-        });
-
-        ViewData["driver"] = data;
-
-        return Json(data);
-    }
+    public async Task<IActionResult> GetDriverById(Guid id) => 
+        Json(await _mediator.Send(new GetDriverByIdQuery(id)));
 
     /// <summary>
     /// Create
@@ -115,26 +106,11 @@ public class DriverController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> DriverDetail([FromRoute]Guid id)
     {
-        var driverData = await _mediator.Send(new GetDriverByIdQuery
-        {
-            Id = id
-        });
-
-        var carList = await _mediator.Send(new GetCarsByDriverIdQuery
-        {
-            DriverId = id
-        });
-            
-        var tripList = await _mediator.Send(new GetTripsByDriverIdQuery
-        {
-            DriverId = id
-        });
-
         var viewModel = new DriverViewModel
         {
-            DriverDto = _mapper.Map<DriverDto>(driverData),
-            Cars = _mapper.Map<List<CarDto>>(carList),
-            Trips = _mapper.Map<List<TripDto>>(tripList)
+            DriverDto = _mapper.Map<DriverDto>(await _mediator.Send(new GetDriverByIdQuery(id))),
+            Cars = _mapper.Map<List<CarDto>>(await _mediator.Send(new GetDriverCarsQuery(id))),
+            Trips = _mapper.Map<List<TripDto>>(await _mediator.Send(new GetTripsByDriverIdQuery(id)))
         };
 
         return View(viewModel);
@@ -149,17 +125,8 @@ public class DriverController : BaseController
     /// </summary>
     /// <param name="id"> Car Id </param>
     /// <returns> Car entity </returns>
-    public async Task<IActionResult> GetCarById(Guid id)
-    {
-        var data = await _mediator.Send(new GetCarByIdQuery
-        {
-            Id = id
-        });
-
-        ViewData["car"] = data;
-
-        return Json(data);
-    }
+    public async Task<IActionResult> GetCarById(Guid id) => 
+        Json(await _mediator.Send(new GetCarByIdQuery(id)));
 
     /// <summary>
     /// Create

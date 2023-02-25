@@ -12,19 +12,20 @@ namespace Driver.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetCarsQuery : IRequest<IQueryable<CarEntity>>
+public record GetCarsQuery : IRequest<IQueryable<CarEntity>>;
+
+public class GetCarsQueryHandler : IRequestHandler<GetCarsQuery, IQueryable<CarEntity>>
 {
-    public class GetCarsQueryHandler : IRequestHandler<GetCarsQuery,IQueryable<CarEntity>>
+    private readonly IApplicationDbContext _context;
+
+    public GetCarsQueryHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
-        public GetCarsQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-        public Task<IQueryable<CarEntity>> Handle(GetCarsQuery query, CancellationToken cancellationToken)
-        {
-            var entities = _context.Cars.Where(d => true);
-            return Task.FromResult(entities);
-        }
+        _context = context;
+    }
+
+    public Task<IQueryable<CarEntity>> Handle(GetCarsQuery query, CancellationToken cancellationToken)
+    {
+        var entities = _context.Cars.Where(d => true);
+        return Task.FromResult(entities);
     }
 }

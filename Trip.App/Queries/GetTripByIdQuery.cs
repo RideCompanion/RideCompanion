@@ -13,30 +13,21 @@ namespace Trip.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetTripByIdQuery : IRequest<TripEntity?>
+public record GetTripByIdQuery(Guid Id) : IRequest<TripEntity?>;
+
+public class GetTripByIdQueryHandler : IRequestHandler<GetTripByIdQuery, TripEntity?>
 {
-    public GetTripByIdQuery()
+    private readonly IApplicationDbContext _context;
+
+    public GetTripByIdQueryHandler(IApplicationDbContext context)
     {
+        _context = context;
     }
 
-    public GetTripByIdQuery(Guid id)
+    public async Task<TripEntity?> Handle(GetTripByIdQuery query, CancellationToken cancellationToken)
     {
-        Id = id;
-    }
-
-    public Guid Id { get; set; }
-    
-    public class GetTripByIdQueryHandler : IRequestHandler<GetTripByIdQuery,TripEntity?>
-    {
-        private readonly IApplicationDbContext _context;
-        public GetTripByIdQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-        public async Task<TripEntity?> Handle(GetTripByIdQuery query, CancellationToken cancellationToken)
-        {
-            var data = await _context.Trips.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
-            return data;
-        }
+        var data = await _context.Trips.FirstOrDefaultAsync(d => d.Id == query.Id,
+            cancellationToken: cancellationToken);
+        return data;
     }
 }

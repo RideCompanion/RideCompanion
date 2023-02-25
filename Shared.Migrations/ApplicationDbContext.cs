@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Trip.Domain.Entities;
 using User.Domain.Entities;
-
-#pragma warning disable CS8618
+#pragma warning disable CS0108, CS0114, CS8618
 
 namespace Shared.Migrations;
 

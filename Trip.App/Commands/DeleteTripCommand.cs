@@ -11,39 +11,28 @@ namespace Trip.App.Commands;
 /// <summary>
 /// Command
 /// </summary>
-public class DeleteTripCommand : IRequest<Guid>
+public record DeleteTripCommand(Guid Id) : IRequest<Guid>;
+
+public class DeleteTripCommandHandler : IRequestHandler<DeleteTripCommand, Guid>
 {
-    public DeleteTripCommand(Guid id)
+    private readonly IApplicationDbContext _context;
+
+    public DeleteTripCommandHandler(IApplicationDbContext context)
     {
-        Id = id;
+        _context = context;
     }
 
-    private Guid Id { get; }
-    
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class DeleteTripCommandHandler : IRequestHandler<DeleteTripCommand, Guid>
+    public async Task<Guid> Handle(DeleteTripCommand command, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        
-        public DeleteTripCommandHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-        
-        public async Task<Guid> Handle(DeleteTripCommand command, CancellationToken cancellationToken)
-        {
-            var entity = _context.Trips.FirstOrDefault(e => e.Id == command.Id);
-            
-            if (entity != null)
-            {
-                _context.Trips.Remove(entity);
-                await _context.SaveChanges();
-                return entity.Id;
-            }
+        var entity = _context.Trips.FirstOrDefault(e => e.Id == command.Id);
 
-            return command.Id;
+        if (entity != null)
+        {
+            _context.Trips.Remove(entity);
+            await _context.SaveChanges();
+            return entity.Id;
         }
+
+        return command.Id;
     }
 }

@@ -21,7 +21,14 @@ public class DriverMappingProfile : Profile
     {
         CreateMap<CarDto, CarEntity>();
         CreateMap<CarEntity, CarDto>();
+        
         CreateMap<DriverDto, DriverEntity>();
         CreateMap<DriverEntity, DriverDto>();
+        
+        CreateMap<CarModelEntity, CarModelDto>();
+        CreateMap<CarModelDto, CarModelEntity>();
+        
+        CreateMap<CarModelEntity, CarBrandDto>();
+        CreateMap<CarBrandDto, CarModelEntity>();
     }
 }

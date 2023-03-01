@@ -10,8 +10,10 @@ using Driver.Domain.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RideCompanion.Controllers.Base;
 using RideCompanion.ViewModels;
+using Shared.Repository.CacheService;
 using Trip.App.Queries;
 using Trip.Domain.Dto;
 
@@ -25,11 +27,13 @@ public class DriverController : BaseController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly CacheService _cache;
 
-    public DriverController(IMediator mediator, IMapper mapper)
+    public DriverController(IMediator mediator, IMapper mapper, CacheService cache)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _cache = cache;
     }
 
     /// <summary>
@@ -39,7 +43,7 @@ public class DriverController : BaseController
     public async Task<IActionResult> Index()
     {
         var data = await _mediator.Send(new GetDriversQuery());
-
+        
         var viewModel = new DriverViewModel
         {
             Drivers = _mapper.Map<List<DriverDto>>(data)
@@ -106,6 +110,10 @@ public class DriverController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> DriverDetail([FromRoute]Guid id)
     {
+        var carModel = await _cache.GetCarBrandsFromCache();
+
+        ViewBag.Make = new SelectList(carModel, "Brand", "Brand");
+        
         var viewModel = new DriverViewModel
         {
             DriverDto = _mapper.Map<DriverDto>(await _mediator.Send(new GetDriverByIdQuery(id))),

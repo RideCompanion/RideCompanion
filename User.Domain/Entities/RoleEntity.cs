@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+#pragma warning disable CS8618
 
 namespace User.Domain.Entities;
 

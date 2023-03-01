@@ -18,10 +18,12 @@ public interface IApplicationDbContext
     public DbSet<RoleEntity> Roles { get; set; }
     public DbSet<UserRolesEntity> UserRoles { get; set; }
     
-    DbSet<DriverEntity> Drivers { get; set; }
-    DbSet<CarEntity> Cars { get; set; }
-    DbSet<TripEntity> Trips { get; set; }
-    DbSet<CompanionEntity> Companions { get; set; }
+    public DbSet<DriverEntity> Drivers { get; set; }
+    public DbSet<CarEntity> Cars { get; set; }
+    public DbSet<CarModelEntity> CarModels { get; set; }
+    public DbSet<CarBrandEntity> CarBrands { get; set; }
+    public DbSet<TripEntity> Trips { get; set; }
+    public DbSet<CompanionEntity> Companions { get; set; }
     
     Task<int> SaveChanges();
 }

@@ -1,11 +1,9 @@
-﻿using Shared.Abstractions.Entities;
-
-namespace Driver.Domain.Entities;
+﻿namespace CarsModelsFromJson;
 
 /// <summary>
 /// Car model entity
 /// </summary>
-public class CarModelEntity : IBaseEntity
+public class CarBrandEntity
 {
     /// <summary>
     /// Id
@@ -16,16 +14,6 @@ public class CarModelEntity : IBaseEntity
     /// Make
     /// </summary>
     public string? Brand { get; set; }
-
-    /// <summary>
-    /// Model
-    /// </summary>
-    public string? Model { get; set; }
-    
-    /// <summary>
-    /// Cars
-    /// </summary>
-    public ICollection<CarEntity>? Cars { get; set; }
 
     /// <summary>
     /// Id created user

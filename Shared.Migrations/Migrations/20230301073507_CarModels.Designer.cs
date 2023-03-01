@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Shared.Migrations;
@@ -11,9 +12,11 @@ using Shared.Migrations;
 namespace Shared.Migrations.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230301073507_CarModels")]
+    partial class CarModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,45 +64,10 @@ namespace Shared.Migrations.Migrations
                     b.ToTable("Companions", "public");
                 });
 
-            modelBuilder.Entity("Driver.Domain.Entities.CarBrandEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("CreatedById")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("UpdateById")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CarBrands", "public");
-                });
-
             modelBuilder.Entity("Driver.Domain.Entities.CarEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Brand")
-                        .HasColumnType("text");
-
-                    b.Property<Guid?>("CarBrandEntityId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("CarModelId")
@@ -120,6 +88,9 @@ namespace Shared.Migrations.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Make")
+                        .HasColumnType("text");
+
                     b.Property<string>("Model")
                         .HasColumnType("text");
 
@@ -134,8 +105,6 @@ namespace Shared.Migrations.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CarBrandEntityId");
-
                     b.HasIndex("CarModelId");
 
                     b.HasIndex("DriverId");
@@ -149,9 +118,6 @@ namespace Shared.Migrations.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Brand")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -160,6 +126,9 @@ namespace Shared.Migrations.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("Make")
+                        .HasColumnType("text");
 
                     b.Property<string>("Model")
                         .HasColumnType("text");
@@ -501,10 +470,6 @@ namespace Shared.Migrations.Migrations
 
             modelBuilder.Entity("Driver.Domain.Entities.CarEntity", b =>
                 {
-                    b.HasOne("Driver.Domain.Entities.CarBrandEntity", null)
-                        .WithMany("Cars")
-                        .HasForeignKey("CarBrandEntityId");
-
                     b.HasOne("Driver.Domain.Entities.CarModelEntity", "CarModel")
                         .WithMany("Cars")
                         .HasForeignKey("CarModelId")
@@ -589,11 +554,6 @@ namespace Shared.Migrations.Migrations
                         .HasForeignKey("User.Domain.Entities.UserRolesEntity", "UserId", "RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Driver.Domain.Entities.CarBrandEntity", b =>
-                {
-                    b.Navigation("Cars");
                 });
 
             modelBuilder.Entity("Driver.Domain.Entities.CarModelEntity", b =>

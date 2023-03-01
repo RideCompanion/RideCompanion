@@ -1,11 +1,11 @@
 ﻿using Shared.Abstractions.Entities;
 
-namespace Driver.Domain.Entities;
+namespace Driver.Domain.Dto;
 
 /// <summary>
-/// Car model entity
+/// Car model dto
 /// </summary>
-public class CarModelEntity : IBaseEntity
+public class CarModelDto : IBaseEntity
 {
     /// <summary>
     /// Id
@@ -21,11 +21,6 @@ public class CarModelEntity : IBaseEntity
     /// Model
     /// </summary>
     public string? Model { get; set; }
-    
-    /// <summary>
-    /// Cars
-    /// </summary>
-    public ICollection<CarEntity>? Cars { get; set; }
 
     /// <summary>
     /// Id created user

@@ -12,6 +12,7 @@
       <ProjectReference Include="..\Driver.App\Driver.App.csproj" />
       <ProjectReference Include="..\Shared.Core\Shared.Core.csproj" />
       <ProjectReference Include="..\Shared.Migrations\Shared.Migrations.csproj" />
+      <ProjectReference Include="..\Shared.Repository\Shared.Repository.csproj" />
       <ProjectReference Include="..\Trip.App\Trip.App.csproj" />
       <ProjectReference Include="..\User.App\User.App.csproj" />
       <ProjectReference Include="..\User.Domain\User.Domain.csproj" />

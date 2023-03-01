@@ -23,6 +23,8 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity, RoleEntity, Gu
     
     public DbSet<DriverEntity> Drivers { get; set; }
     public DbSet<CarEntity> Cars { get; set; }
+    public DbSet<CarModelEntity> CarModels { get; set; }
+    public DbSet<CarBrandEntity> CarBrands { get; set; }
     public DbSet<TripEntity> Trips { get; set; }
     public DbSet<CompanionEntity> Companions { get; set; }
 

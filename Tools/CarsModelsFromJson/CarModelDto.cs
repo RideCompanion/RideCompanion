@@ -1,4 +1,6 @@
-﻿namespace CarsModelsFromJson;
+﻿// ReSharper disable All
+#pragma warning disable CS8618
+namespace CarsModelsFromJson;
 
 /// <summary>
 /// Car model entity

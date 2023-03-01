@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using RideCompanion.Extensions;
 using Shared.Migrations;
+using Shared.Repository.CacheService;
 using Trip.App.TripBuilder;
 using User.Domain.Entities;
 
@@ -27,6 +30,10 @@ builder.Services.AddMediatR(MediatRConfigurationExtension.Configuration());
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ITripBuilder, TripBuilder>();
+
+builder.Services.AddTransient<CacheService>();
+builder.Services.AddMemoryCache();
+builder.Services.TryAdd(ServiceDescriptor.Singleton<IMemoryCache, MemoryCache>());
 
 var app = builder.Build();
 

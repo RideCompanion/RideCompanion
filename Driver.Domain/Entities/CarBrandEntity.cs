@@ -5,7 +5,7 @@ namespace Driver.Domain.Entities;
 /// <summary>
 /// Car model entity
 /// </summary>
-public class CarModelEntity : IBaseEntity
+public class CarBrandEntity : IBaseEntity
 {
     /// <summary>
     /// Id
@@ -16,11 +16,6 @@ public class CarModelEntity : IBaseEntity
     /// Make
     /// </summary>
     public string? Brand { get; set; }
-
-    /// <summary>
-    /// Model
-    /// </summary>
-    public string? Model { get; set; }
     
     /// <summary>
     /// Cars

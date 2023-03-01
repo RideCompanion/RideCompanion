@@ -33,11 +33,22 @@ public class CarEntity : IBaseEntity
     /// Car color
     /// </summary>
     public string? Color { get; set; }
+    
+    /// <summary>
+    /// Make of car
+    /// </summary>
+    public string? Brand { get; set; }
 
     /// <summary>
-    /// Car model
+    /// Model of car
     /// </summary>
     public string? Model { get; set; }
+    
+    /// <summary>
+    /// Car model Id
+    /// </summary>
+    public Guid CarModelId { get; set; }
+    public CarModelEntity CarModel { get; set; }
 
     /// <summary>
     /// Created user Id

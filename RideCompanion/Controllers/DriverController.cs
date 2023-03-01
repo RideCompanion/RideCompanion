@@ -110,15 +110,19 @@ public class DriverController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> DriverDetail([FromRoute]Guid id)
     {
+        var driverDto = _mapper.Map<DriverDto>(await _mediator.Send(new GetDriverByIdQuery(id)));
+        var carsListDto = _mapper.Map<List<CarDto>>(await _mediator.Send(new GetDriverCarsQuery(id)));
+        var tripsListDto = _mapper.Map<List<TripDto>>(await _mediator.Send(new GetTripsByDriverIdQuery(id)));
         var carModel = await _cache.GetCarBrandsFromCache();
 
-        ViewBag.Make = new SelectList(carModel, "Brand", "Brand");
+        ViewBag.Brand = new SelectList(carModel, "Brand", "Brand");
         
         var viewModel = new DriverViewModel
         {
-            DriverDto = _mapper.Map<DriverDto>(await _mediator.Send(new GetDriverByIdQuery(id))),
-            Cars = _mapper.Map<List<CarDto>>(await _mediator.Send(new GetDriverCarsQuery(id))),
-            Trips = _mapper.Map<List<TripDto>>(await _mediator.Send(new GetTripsByDriverIdQuery(id)))
+            DriverDto = driverDto,
+            DriverId = driverDto.Id,
+            Cars = carsListDto,
+            Trips = tripsListDto
         };
 
         return View(viewModel);
@@ -151,10 +155,11 @@ public class DriverController : BaseController
             DriverId = viewModel.DriverDto.Id,
             Number = viewModel.CarDto.Number,
             Color = viewModel.CarDto.Color,
+            Brand = viewModel.CarDto.Brand,
             Model = viewModel.CarDto.Model
         });
 
-        return RedirectToAction("DriverDetail", new {id = viewModel.CarDto.Id});
+        return RedirectToAction("DriverDetail", new {id = viewModel.CarDto.DriverId});
     }
 
     /// <summary>
@@ -176,11 +181,16 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> DeleteCar(Guid id)
     {
-        await _mediator.Send(new DeleteCarCommand
-        {
-            CarId = id
-        });
+        var carEntity = await _mediator.Send(new GetCarByIdQuery(id));
 
-        return RedirectToAction("DriverDetail", new {id});
+        if (carEntity is not null)
+        {
+            await _mediator.Send(new DeleteCarCommand
+            {
+                CarId = id
+            });
+        }
+
+        return RedirectToAction("DriverDetail", new {id = carEntity?.DriverId});
     }
 }

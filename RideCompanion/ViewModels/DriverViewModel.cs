@@ -18,6 +18,11 @@ public class DriverViewModel
     /// Driver dto
     /// </summary>
     public DriverDto DriverDto { get; set; }
+    
+    /// <summary>
+    /// Driver Id
+    /// </summary>
+    public Guid DriverId { get; set; }
         
     /// <summary>
     /// Drivers list
@@ -28,6 +33,11 @@ public class DriverViewModel
     /// Car dto
     /// </summary>
     public CarDto CarDto { get; set; }
+    
+    /// <summary>
+    /// Car Id
+    /// </summary>
+    public Guid CarId { get; set; }
         
     /// <summary>
     /// Cars list

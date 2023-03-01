@@ -21,11 +21,6 @@ public class CarModelEntity : IBaseEntity
     /// Model
     /// </summary>
     public string? Model { get; set; }
-    
-    /// <summary>
-    /// Cars
-    /// </summary>
-    public ICollection<CarEntity>? Cars { get; set; }
 
     /// <summary>
     /// Id created user

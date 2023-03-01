@@ -16,11 +16,6 @@ public class CarBrandEntity : IBaseEntity
     /// Make
     /// </summary>
     public string? Brand { get; set; }
-    
-    /// <summary>
-    /// Cars
-    /// </summary>
-    public ICollection<CarEntity>? Cars { get; set; }
 
     /// <summary>
     /// Id created user

@@ -1,6 +1,5 @@
 ﻿using Driver.App.Queries;
 using Driver.Domain.Dto;
-using Driver.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
@@ -22,14 +21,15 @@ public class CacheService
 
     public async Task<IReadOnlyList<CarBrandDto>?> GetCarBrandsFromCache()
     {
-        _cache.TryGetValue("CarMakers", out IReadOnlyList<CarBrandDto>? carModels);
+        _cache.TryGetValue("CarBrands", out IReadOnlyList<CarBrandDto>? carModels);
 
         if (carModels is null)
         {
             var data = await _mediator.Send(new GetCarBrandsQuery());
             _logger.LogDebug("Set CarModels from cache.");
-            _cache.Set("CarModels", data,
+            _cache.Set("CarBrands", data,
                 new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(5)));
+            return data;
         }
 
         _logger.LogDebug("Get CarModels from cache.");

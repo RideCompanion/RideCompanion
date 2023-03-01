@@ -31,6 +31,6 @@ public class GetCarMakersQueryHandler : IRequestHandler<GetCarBrandsQuery, List<
     {
         var entity = await _context.CarBrands.ToListAsync(cancellationToken);
         var result = _mapper.Map<List<CarBrandDto>>(entity);
-        return result.Distinct().ToList();
+        return result.Distinct().OrderBy(x => x.Brand).ToList();
     }
 }

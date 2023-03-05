@@ -24,11 +24,13 @@ public class TripController : BaseController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ITripDirector _tripDirector;
     
-    public TripController(IMediator mediator, IMapper mapper)
+    public TripController(IMediator mediator, IMapper mapper, ITripDirector tripDirector)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _tripDirector = tripDirector;
     }
     
     /// <summary>
@@ -37,11 +39,11 @@ public class TripController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> Index()
     {
-        var data = await _mediator.Send(new GetTripsQuery());
+        var tripList = await _mediator.Send(new GetTripsQuery());
         
         var viewModel = new TripViewModel
         {
-            Trips = _mapper.Map<List<TripDto>>(data)
+            Trips = _mapper.Map<List<TripDto>>(tripList)
         };
             
         return View(viewModel);
@@ -66,9 +68,7 @@ public class TripController : BaseController
     [Authorize]
     public async Task<IActionResult> CreateTrip(TripViewModel viewModel)
     {
-        var director = new TripDirector(new TripBuilder());
-        var trip = director.BuildFullTrip(viewModel.TripDto!);
-        await _mediator.Send(new CreateTripCommand(trip));
+        await _mediator.Send(new CreateTripCommand(_tripDirector.BuildTrip(viewModel.TripDto!)));
         return RedirectToAction("Index");
     }
 

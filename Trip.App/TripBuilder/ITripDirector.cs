@@ -31,5 +31,5 @@ public interface ITripDirector
     /// </summary>
     /// <param name="tripDto">Trip dto</param>
     /// <returns>Trip dto</returns>
-    TripDto BuildFullTrip(TripDto tripDto);
+    TripDto BuildTrip(TripDto tripDto);
 }

@@ -50,11 +50,11 @@ public class TripDirector : ITripDirector
     }
 
     /// <summary>
-    /// Build full trip
+    /// Build trip
     /// </summary>
     /// <param name="tripDto">Trip dto</param>
     /// <returns>Trip dto</returns>
-    public TripDto BuildFullTrip(TripDto tripDto)
+    public TripDto BuildTrip(TripDto tripDto)
     {
         _tripBuilder.SetCurrentTrip(tripDto);
 

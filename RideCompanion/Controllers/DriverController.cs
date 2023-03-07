@@ -43,7 +43,7 @@ public class DriverController : BaseController
     public async Task<IActionResult> Index()
     {
         var data = await _mediator.Send(new GetDriversQuery());
-        
+
         var viewModel = new DriverViewModel
         {
             Drivers = _mapper.Map<List<DriverDto>>(data)
@@ -57,7 +57,7 @@ public class DriverController : BaseController
     /// </summary>
     /// <param name="id"> Driver Id </param>
     /// <returns> Driver entity </returns>
-    public async Task<IActionResult> GetDriverById(Guid id) => 
+    public async Task<IActionResult> GetDriverById(Guid id) =>
         Json(await _mediator.Send(new GetDriverByIdQuery(id)));
 
     /// <summary>
@@ -108,7 +108,7 @@ public class DriverController : BaseController
     /// </summary>
     /// <param name="id"> Driver id </param>
     /// <returns> View </returns>
-    public async Task<IActionResult> DriverDetail([FromRoute]Guid id)
+    public async Task<IActionResult> DriverDetail([FromRoute] Guid id)
     {
         var driverDto = _mapper.Map<DriverDto>(await _mediator.Send(new GetDriverByIdQuery(id)));
         var carsListDto = _mapper.Map<List<CarDto>>(await _mediator.Send(new GetCarsByDriverIdQuery(id)));
@@ -116,7 +116,7 @@ public class DriverController : BaseController
         var carModel = await _cache.GetCarBrandsFromCache();
 
         ViewBag.Brand = new SelectList(carModel, "Brand", "Brand");
-        
+
         var viewModel = new DriverViewModel
         {
             DriverDto = driverDto,
@@ -127,10 +127,6 @@ public class DriverController : BaseController
 
         return View(viewModel);
     }
-
-    // -------------------------------------------
-    // Car
-    // -------------------------------------------
 
     /// <summary>
     /// Get car by Id
@@ -159,7 +155,7 @@ public class DriverController : BaseController
             Model = viewModel.CarDto.Model
         });
 
-        return RedirectToAction("DriverDetail", new {id = viewModel.CarDto.DriverId});
+        return RedirectToAction("DriverDetail", new { id = viewModel.CarDto.DriverId });
     }
 
     /// <summary>
@@ -171,7 +167,7 @@ public class DriverController : BaseController
     {
         await _mediator.Send(new UpdateCarCommand(viewModel.CarDto));
 
-        return RedirectToAction("DriverDetail", new {id = viewModel.CarDto.DriverId});
+        return RedirectToAction("DriverDetail", new { id = viewModel.CarDto.DriverId });
     }
 
     /// <summary>
@@ -191,6 +187,6 @@ public class DriverController : BaseController
             });
         }
 
-        return RedirectToAction("DriverDetail", new {id = carEntity?.DriverId});
+        return RedirectToAction("DriverDetail", new { id = carEntity?.DriverId });
     }
 }

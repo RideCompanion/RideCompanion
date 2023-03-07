@@ -18,6 +18,11 @@ public class TripDto
     /// Id
     /// </summary>
     public Guid Id { get; set; }
+    
+    /// <summary>
+    /// Driver Id
+    /// </summary>
+    public Guid? DriverId { get; set; }
 
     /// <summary>
     /// Driver
@@ -25,9 +30,19 @@ public class TripDto
     public DriverDto Driver { get; set; }
     
     /// <summary>
+    /// Companion Id
+    /// </summary>
+    public Guid? CompanionId { get; set; }
+    
+    /// <summary>
     /// Companion
     /// </summary>
     public CompanionDto Companion { get; set; }
+     
+    /// <summary>
+    /// Car Id
+    /// </summary>
+    public Guid CarId { get; set; }
     
     /// <summary>
     /// Car

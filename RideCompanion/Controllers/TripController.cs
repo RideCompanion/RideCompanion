@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Date: 2023-02-23
  * Author: A.A.Konkin
 */
@@ -31,12 +31,16 @@ public class TripController : BaseController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
+    private readonly ITripDirector _tripDirector;
+    
+    public TripController(IMediator mediator, IMapper mapper, ITripDirector tripDirector)
     private readonly UserManager<UserEntity> _userManager;
 
     public TripController(IMediator mediator, IMapper mapper, UserManager<UserEntity> userManager)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _tripDirector = tripDirector;
         _userManager = userManager;
     }
     
@@ -46,6 +50,7 @@ public class TripController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> Index()
     {
+        var tripList = await _mediator.Send(new GetTripsQuery());
         var userId = _userManager.GetUserId(User);
         
         if(userId == null)
@@ -68,6 +73,7 @@ public class TripController : BaseController
         
         var viewModel = new TripViewModel
         {
+            Trips = _mapper.Map<List<TripDto>>(tripList)
             Trips = _mapper.Map<List<TripDto>>(tripsList),
             Companions = _mapper.Map<List<CompanionDto>>(companions),
             Drivers = _mapper.Map<List<DriverDto>>(drivers),
@@ -96,9 +102,7 @@ public class TripController : BaseController
     [Authorize]
     public async Task<IActionResult> CreateTrip(TripViewModel viewModel)
     {
-        var director = new TripDirector(new TripBuilder());
-        var trip = director.BuildFullTrip(viewModel.TripDto!);
-        await _mediator.Send(new CreateTripCommand(trip));
+        await _mediator.Send(new CreateTripCommand(_tripDirector.BuildTrip(viewModel.TripDto!)));
         return RedirectToAction("Index");
     }
 

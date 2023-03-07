@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Date: 2023-02-23
  * Author: A.A.Konkin
 */
@@ -32,11 +32,9 @@ public class TripController : BaseController
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
     private readonly ITripDirector _tripDirector;
-    
-    public TripController(IMediator mediator, IMapper mapper, ITripDirector tripDirector)
     private readonly UserManager<UserEntity> _userManager;
 
-    public TripController(IMediator mediator, IMapper mapper, UserManager<UserEntity> userManager)
+    public TripController(IMediator mediator, IMapper mapper, UserManager<UserEntity> userManager, ITripDirector tripDirector)
     {
         _mediator = mediator;
         _mapper = mapper;
@@ -73,7 +71,6 @@ public class TripController : BaseController
         
         var viewModel = new TripViewModel
         {
-            Trips = _mapper.Map<List<TripDto>>(tripList)
             Trips = _mapper.Map<List<TripDto>>(tripsList),
             Companions = _mapper.Map<List<CompanionDto>>(companions),
             Drivers = _mapper.Map<List<DriverDto>>(drivers),

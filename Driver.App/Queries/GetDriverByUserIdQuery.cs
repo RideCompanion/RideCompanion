@@ -12,11 +12,11 @@ namespace Driver.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public record GetUserDriversQuery(
+public record GetDriverByUserIdQuery(
     Guid UserId
 ) : IRequest<IQueryable<DriverEntity>>;
 
-public class GetDriverByUserIdQueryHandler : IRequestHandler<GetUserDriversQuery, IQueryable<DriverEntity>>
+public class GetDriverByUserIdQueryHandler : IRequestHandler<GetDriverByUserIdQuery, IQueryable<DriverEntity>>
 {
     private readonly IApplicationDbContext _context;
 
@@ -25,7 +25,7 @@ public class GetDriverByUserIdQueryHandler : IRequestHandler<GetUserDriversQuery
         _context = context;
     }
 
-    public Task<IQueryable<DriverEntity>> Handle(GetUserDriversQuery query, CancellationToken cancellationToken)
+    public Task<IQueryable<DriverEntity>> Handle(GetDriverByUserIdQuery query, CancellationToken cancellationToken)
     {
         var productList = _context.Drivers.Where(d => d.UserId == query.UserId);
         return Task.FromResult(productList);

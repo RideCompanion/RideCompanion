@@ -12,11 +12,11 @@ namespace Driver.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public record GetDriverCarsQuery(
+public record GetCarsByDriverIdQuery(
     Guid DriverId
 ) : IRequest<IQueryable<CarEntity>>;
 
-public class GetCarsByDriverIdQueryHandler : IRequestHandler<GetDriverCarsQuery, IQueryable<CarEntity>>
+public class GetCarsByDriverIdQueryHandler : IRequestHandler<GetCarsByDriverIdQuery, IQueryable<CarEntity>>
 {
     private readonly IApplicationDbContext _context;
 
@@ -25,7 +25,7 @@ public class GetCarsByDriverIdQueryHandler : IRequestHandler<GetDriverCarsQuery,
         _context = context;
     }
 
-    public Task<IQueryable<CarEntity>> Handle(GetDriverCarsQuery query, CancellationToken cancellationToken)
+    public Task<IQueryable<CarEntity>> Handle(GetCarsByDriverIdQuery query, CancellationToken cancellationToken)
     {
         var productList = _context.Cars.Where(d => d.DriverId == query.DriverId);
         return Task.FromResult(productList);

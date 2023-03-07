@@ -4,15 +4,22 @@
 */
 
 using AutoMapper;
+using Companion.App.Queries;
+using Companion.Domain.Dto;
+using Driver.App.Queries;
+using Driver.Domain.Dto;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RideCompanion.Controllers.Base;
 using RideCompanion.ViewModels;
 using Trip.App.Commands;
 using Trip.App.Queries;
 using Trip.App.TripBuilder;
 using Trip.Domain.Dto;
+using User.Domain.Entities;
 
 namespace RideCompanion.Controllers;
 
@@ -24,11 +31,13 @@ public class TripController : BaseController
 {
     private readonly IMediator _mediator;
     private readonly IMapper _mapper;
-    
-    public TripController(IMediator mediator, IMapper mapper)
+    private readonly UserManager<UserEntity> _userManager;
+
+    public TripController(IMediator mediator, IMapper mapper, UserManager<UserEntity> userManager)
     {
         _mediator = mediator;
         _mapper = mapper;
+        _userManager = userManager;
     }
     
     /// <summary>
@@ -37,11 +46,32 @@ public class TripController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> Index()
     {
-        var data = await _mediator.Send(new GetTripsQuery());
+        var userId = _userManager.GetUserId(User);
+        
+        if(userId == null)
+            return RedirectToAction("Index", "Home");
+        
+        var tripsList = await _mediator.Send(new GetTripsQuery());
+        var companions = await _mediator.Send(new GetCompanionsByUserIdQuery(Guid.Parse(userId)));
+        var drivers = await _mediator.Send(new GetDriverByUserIdQuery(Guid.Parse(userId)));
+        var cars = await _mediator.Send(new GetCarsByUserIdQuery(Guid.Parse(userId)));
+
+        if(!companions.Any())
+            return RedirectToAction("Index", "Companion");
+        
+        if(!drivers.Any())
+            return RedirectToAction("Index", "Driver");
+        
+        ViewBag.Companions = new SelectList(companions, "Id", "FullName");
+        ViewBag.Drivers = new SelectList(drivers, "Id", "FullName");
+        ViewBag.Cars = new SelectList(cars, "Id", "Number");
         
         var viewModel = new TripViewModel
         {
-            Trips = _mapper.Map<List<TripDto>>(data)
+            Trips = _mapper.Map<List<TripDto>>(tripsList),
+            Companions = _mapper.Map<List<CompanionDto>>(companions),
+            Drivers = _mapper.Map<List<DriverDto>>(drivers),
+            Cars = _mapper.Map<List<CarDto>>(cars)
         };
             
         return View(viewModel);

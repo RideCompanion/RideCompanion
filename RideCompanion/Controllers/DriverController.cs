@@ -111,7 +111,7 @@ public class DriverController : BaseController
     public async Task<IActionResult> DriverDetail([FromRoute]Guid id)
     {
         var driverDto = _mapper.Map<DriverDto>(await _mediator.Send(new GetDriverByIdQuery(id)));
-        var carsListDto = _mapper.Map<List<CarDto>>(await _mediator.Send(new GetDriverCarsQuery(id)));
+        var carsListDto = _mapper.Map<List<CarDto>>(await _mediator.Send(new GetCarsByDriverIdQuery(id)));
         var tripsListDto = _mapper.Map<List<TripDto>>(await _mediator.Send(new GetTripsByDriverIdQuery(id)));
         var carModel = await _cache.GetCarBrandsFromCache();
 

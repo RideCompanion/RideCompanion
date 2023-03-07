@@ -25,6 +25,11 @@ public class CarEntity : IBaseEntity
     public DriverEntity Driver { get; set; }
     
     /// <summary>
+    /// User Id
+    /// </summary>
+    public Guid UserId { get; set; }
+    
+    /// <summary>
     /// Car number
     /// </summary>
     public string? Number { get; set; }

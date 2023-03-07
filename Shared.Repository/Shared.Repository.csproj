@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Driver.App\Driver.App.csproj" />
       <ProjectReference Include="..\Shared.Abstractions\Shared.Abstractions.csproj" />
       <ProjectReference Include="..\Shared.Migrations\Shared.Migrations.csproj" />
       <ProjectReference Include="..\Shared.Core\Shared.Core.csproj" />

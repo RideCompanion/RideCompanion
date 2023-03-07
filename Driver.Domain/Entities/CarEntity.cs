@@ -4,6 +4,7 @@
 */
 
 using Shared.Abstractions.Entities;
+#pragma warning disable CS8618
 
 namespace Driver.Domain.Entities;
 
@@ -24,6 +25,11 @@ public class CarEntity : IBaseEntity
     public DriverEntity Driver { get; set; }
     
     /// <summary>
+    /// User Id
+    /// </summary>
+    public Guid UserId { get; set; }
+    
+    /// <summary>
     /// Car number
     /// </summary>
     public string? Number { get; set; }
@@ -31,12 +37,17 @@ public class CarEntity : IBaseEntity
     /// <summary>
     /// Car color
     /// </summary>
-    public string? Color { get; set; } = null!;
+    public string? Color { get; set; }
+    
+    /// <summary>
+    /// Make of car
+    /// </summary>
+    public string? Brand { get; set; }
 
     /// <summary>
-    /// Car model
+    /// Model of car
     /// </summary>
-    public string? Model { get; set; } = null!;
+    public string? Model { get; set; }
 
     /// <summary>
     /// Created user Id

@@ -3,6 +3,7 @@
  * Author: A.A.Konkin
 */
 
+#pragma warning disable CS8618
 namespace User.Domain.Dto;
 
 /// <summary>

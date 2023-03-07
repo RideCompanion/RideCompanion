@@ -15,54 +15,43 @@ namespace Trip.App.Commands;
 /// <summary>
 /// Command
 /// </summary>
-public class CreateTripCommand : IRequest<Guid>
+public record CreateTripCommand(TripDto TripDto) : IRequest<Guid>;
+
+public class CreateTripCommandHandler : IRequestHandler<CreateTripCommand, Guid>
 {
-    public CreateTripCommand(TripDto tripDto)
+    private readonly IApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public CreateTripCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
-        TripDto = tripDto;
+        _context = context;
+        _httpContextAccessor = httpContextAccessor;
     }
 
-    private TripDto TripDto { get; }
-    
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class CreateTripCommandHandler : IRequestHandler<CreateTripCommand, Guid>
+    public async Task<Guid> Handle(CreateTripCommand command, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        
-        public CreateTripCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
-        {
-            _context = context;
-            _httpContextAccessor = httpContextAccessor;
-        }
-        
-        public async Task<Guid> Handle(CreateTripCommand command, CancellationToken cancellationToken)
-        {
-            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
-            var entity = new TripEntity
-            {
-                Id = default,
-                
-                DriverId = command.TripDto.Driver.Id,
-                CompanionId = command.TripDto.Companion.Id,
-                CarId = command.TripDto.Car.Id,
-                AddressFrom = command.TripDto.AddressFrom,
-                AddressTo = command.TripDto.AddressTo,
-                DateTime = command.TripDto.DateTime,
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                CreatedById = Guid.Parse(userId!),
-                CreateDate = DateTime.Now,
-                UpdateById = Guid.Parse(userId!),
-                UpdateDate = DateTime.Now,
-                IsDeleted = false
-            };
-            
-            _context.Trips?.Add(entity);
-            await _context.SaveChanges();
-            return entity.Id;
-        }
+        var entity = new TripEntity
+        {
+            Id = default,
+
+            DriverId = command.TripDto.Driver.Id,
+            CompanionId = command.TripDto.Companion.Id,
+            CarId = command.TripDto.Car.Id,
+            AddressFrom = command.TripDto.AddressFrom,
+            AddressTo = command.TripDto.AddressTo,
+            DateTime = command.TripDto.DateTime,
+
+            CreatedById = Guid.Parse(userId!),
+            CreateDate = DateTime.Now,
+            UpdateById = Guid.Parse(userId!),
+            UpdateDate = DateTime.Now,
+            IsDeleted = false
+        };
+
+        _context.Trips?.Add(entity);
+        await _context.SaveChanges();
+        return entity.Id;
     }
 }

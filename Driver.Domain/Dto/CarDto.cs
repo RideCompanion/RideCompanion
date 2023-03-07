@@ -33,7 +33,12 @@ public class CarDto
     public string? Color { get; set; }
     
     /// <summary>
-    /// Car model
+    /// Make of car
+    /// </summary>
+    public string? Brand { get; set; }
+    
+    /// <summary>
+    /// Model of car
     /// </summary>
     public string? Model { get; set; }
     

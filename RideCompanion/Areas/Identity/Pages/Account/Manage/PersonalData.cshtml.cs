@@ -4,28 +4,32 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using User.Domain.Entities;
 
-namespace RideCompanion.Areas.Identity.Pages.Account.Manage;
-
-public class PersonalDataModel : PageModel
+namespace RideCompanion.Areas.Identity.Pages.Account.Manage
 {
-    private readonly UserManager<IdentityUser> _userManager;
-
-    public PersonalDataModel(
-        UserManager<IdentityUser> userManager,
-        ILogger<PersonalDataModel> logger)
+    public class PersonalDataModel : PageModel
     {
-        _userManager = userManager;
-    }
+        private readonly UserManager<UserEntity> _userManager;
+        private readonly ILogger<PersonalDataModel> _logger;
 
-    public async Task<IActionResult> OnGet()
-    {
-        var user = await _userManager.GetUserAsync(User);
-        if (user == null)
+        public PersonalDataModel(
+            UserManager<UserEntity> userManager,
+            ILogger<PersonalDataModel> logger)
         {
-            return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            _userManager = userManager;
+            _logger = logger;
         }
 
-        return Page();
+        public async Task<IActionResult> OnGet()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            return Page();
+        }
     }
 }

@@ -45,6 +45,7 @@ public class UpdateCarCommand : IRequest<Guid>
             if (entity != null)
             {
                 entity.DriverId = command.CarDto.DriverId;
+                entity.UserId = Guid.Parse(userId!);
                 entity.Number = command.CarDto.Number;
                 entity.Color = command.CarDto.Color;
                 entity.Model = command.CarDto.Model;

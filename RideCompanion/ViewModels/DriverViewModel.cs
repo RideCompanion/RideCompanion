@@ -5,6 +5,7 @@
 
 using Driver.Domain.Dto;
 using Trip.Domain.Dto;
+#pragma warning disable CS8618
 
 namespace RideCompanion.ViewModels;
 
@@ -16,17 +17,27 @@ public class DriverViewModel
     /// <summary>
     /// Driver dto
     /// </summary>
-    public DriverDto? DriverDto { get; set; }
+    public DriverDto DriverDto { get; set; }
+    
+    /// <summary>
+    /// Driver Id
+    /// </summary>
+    public Guid DriverId { get; set; }
         
     /// <summary>
     /// Drivers list
     /// </summary>
-    public List<DriverDto>? Drivers { get; set; }
+    public List<DriverDto> Drivers { get; set; }
         
     /// <summary>
     /// Car dto
     /// </summary>
-    public CarDto? CarDto { get; set; }
+    public CarDto CarDto { get; set; }
+    
+    /// <summary>
+    /// Car Id
+    /// </summary>
+    public Guid CarId { get; set; }
         
     /// <summary>
     /// Cars list

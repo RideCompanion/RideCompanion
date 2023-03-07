@@ -4,6 +4,7 @@
 */
 
 using Shared.Abstractions.Entities;
+#pragma warning disable CS8618
 
 namespace Driver.Domain.Entities;
 

@@ -12,21 +12,20 @@ namespace Trip.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetTripsByUserIdQuery : IRequest<IQueryable<CarEntity>>
+public record GetTripsByUserIdQuery(Guid DriverId) : IRequest<IQueryable<CarEntity>>;
+
+public class GetTripsByUserIdQueryHandler : IRequestHandler<GetTripsByUserIdQuery, IQueryable<CarEntity>>
 {
-    public Guid DriverId { get; set; }
-    
-    public class GetTripsByUserIdQueryHandler : IRequestHandler<GetTripsByUserIdQuery,IQueryable<CarEntity>>
+    private readonly IApplicationDbContext _context;
+
+    public GetTripsByUserIdQueryHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
-        public GetTripsByUserIdQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-        public Task<IQueryable<CarEntity>> Handle(GetTripsByUserIdQuery query, CancellationToken cancellationToken)
-        {
-            var data = _context.Cars.Where(d => d.DriverId == query.DriverId);
-            return Task.FromResult(data);
-        }
+        _context = context;
+    }
+
+    public Task<IQueryable<CarEntity>> Handle(GetTripsByUserIdQuery query, CancellationToken cancellationToken)
+    {
+        var data = _context.Cars.Where(d => d.DriverId == query.DriverId);
+        return Task.FromResult(data);
     }
 }

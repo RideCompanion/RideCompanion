@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Trip.Domain.Entities;
 using User.Domain.Entities;
-
-#pragma warning disable CS8618
+#pragma warning disable CS0108, CS0114, CS8618
 
 namespace Shared.Migrations;
 
@@ -24,6 +23,8 @@ public class ApplicationDbContext : IdentityDbContext<UserEntity, RoleEntity, Gu
     
     public DbSet<DriverEntity> Drivers { get; set; }
     public DbSet<CarEntity> Cars { get; set; }
+    public DbSet<CarModelEntity> CarModels { get; set; }
+    public DbSet<CarBrandEntity> CarBrands { get; set; }
     public DbSet<TripEntity> Trips { get; set; }
     public DbSet<CompanionEntity> Companions { get; set; }
 

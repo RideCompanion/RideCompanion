@@ -22,6 +22,7 @@ public class CreateCarCommand : IRequest<Guid>
 
     public string? Color { get; set; }
 
+    public string? Brand { get; set; }
     public string? Model { get; set; }
 
     /// <summary>
@@ -47,8 +48,10 @@ public class CreateCarCommand : IRequest<Guid>
                 Id = default,
 
                 DriverId = command.DriverId,
+                UserId = Guid.Parse(userId!),
                 Number = command.Number,
                 Color = command.Color,
+                Brand = command.Brand,
                 Model = command.Model,
 
                 CreatedById = Guid.Parse(userId!),

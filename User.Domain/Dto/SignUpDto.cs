@@ -28,7 +28,7 @@ public class SignUpDto
     /// <summary>
     /// Repeat password
     /// </summary>
-    public string? RepeatPassword { get; set; }
+    public string? ConfirmPassword { get; set; }
   
     /// <summary>
     /// Full User Name

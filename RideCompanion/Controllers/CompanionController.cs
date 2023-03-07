@@ -21,8 +21,13 @@ namespace RideCompanion.Controllers;
 [Authorize]
 public class CompanionController : BaseController
 {
-    public CompanionController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+    private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
+    
+    public CompanionController(IMediator mediator, IMapper mapper)
     {
+        _mediator = mediator;
+        _mapper = mapper;
     }
     
     /// <summary>
@@ -31,10 +36,10 @@ public class CompanionController : BaseController
     /// <returns></returns>
     public async Task<IActionResult> Index()
     {
-        var data = await Mediator.Send(new GetCompanionsQuery());
+        var data = await _mediator.Send(new GetCompanionsQuery());
         var viewModel = new CompanionViewModel
         {
-            Companions = Mapper.Map<List<CompanionDto>>(data)
+            Companions = _mapper.Map<List<CompanionDto>>(data)
         };
         return View(viewModel);
     }
@@ -46,7 +51,7 @@ public class CompanionController : BaseController
     /// <returns> Companions list </returns>
     public async Task<IActionResult> GetCompanionById(Guid id)
     {
-        var data = await Mediator.Send(new GetCompanionByIdQuery(id));
+        var data = await _mediator.Send(new GetCompanionByIdQuery(id));
         return Json(data);
     }
 
@@ -57,7 +62,7 @@ public class CompanionController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> CreateCompanion(CompanionViewModel viewModel)
     {
-        await Mediator.Send(new CreateCompanionCommand(viewModel.CompanionDto!));
+        await _mediator.Send(new CreateCompanionCommand(viewModel.CompanionDto!));
         return RedirectToAction("Index");
     }
 
@@ -68,7 +73,7 @@ public class CompanionController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> UpdateCompanion(CompanionViewModel viewModel)
     {
-        await Mediator.Send(new UpdateCompanionCommand(viewModel.CompanionDto!));
+        await _mediator.Send(new UpdateCompanionCommand(viewModel.CompanionDto!));
         return RedirectToAction("Index");
     }
 
@@ -79,7 +84,7 @@ public class CompanionController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> DeleteCompanion(Guid id)
     {
-        await Mediator.Send(new DeleteCompanionCommand(id));
+        await _mediator.Send(new DeleteCompanionCommand(id));
         return RedirectToAction("Index");
     }
 }

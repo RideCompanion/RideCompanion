@@ -12,28 +12,22 @@ namespace Driver.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetDriverByUserIdQuery : IRequest<IQueryable<DriverEntity>>
-{
-    public Guid UserId { get; set; }
+public record GetDriverByUserIdQuery(
+    Guid UserId
+) : IRequest<IQueryable<DriverEntity>>;
 
-    public GetDriverByUserIdQuery(Guid userId)
+public class GetDriverByUserIdQueryHandler : IRequestHandler<GetDriverByUserIdQuery, IQueryable<DriverEntity>>
+{
+    private readonly IApplicationDbContext _context;
+
+    public GetDriverByUserIdQueryHandler(IApplicationDbContext context)
     {
-        UserId = userId;
+        _context = context;
     }
 
-    public class GetDriverByUserIdQueryHandler : IRequestHandler<GetDriverByUserIdQuery, IQueryable<DriverEntity>>
+    public Task<IQueryable<DriverEntity>> Handle(GetDriverByUserIdQuery query, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-
-        public GetDriverByUserIdQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public Task<IQueryable<DriverEntity>> Handle(GetDriverByUserIdQuery query, CancellationToken cancellationToken)
-        {
-            var productList = _context.Drivers.Where(d => d.UserId == query.UserId);
-            return Task.FromResult(productList);
-        }
+        var productList = _context.Drivers.Where(d => d.UserId == query.UserId);
+        return Task.FromResult(productList);
     }
 }

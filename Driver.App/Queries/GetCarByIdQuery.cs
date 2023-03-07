@@ -13,23 +13,23 @@ namespace Driver.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetCarByIdQuery : IRequest<CarEntity?>
+public record GetCarByIdQuery(
+    Guid Id
+) : IRequest<CarEntity?>;
+
+public class GetCarByIdQueryHandler : IRequestHandler<GetCarByIdQuery, CarEntity?>
 {
-    public Guid Id { get; set; }
-    
-    public class GetCarByIdQueryHandler : IRequestHandler<GetCarByIdQuery, CarEntity?>
+    private readonly IApplicationDbContext _context;
+
+    public GetCarByIdQueryHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
+        _context = context;
+    }
 
-        public GetCarByIdQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<CarEntity?> Handle(GetCarByIdQuery query, CancellationToken cancellationToken)
-        {
-            var entity = await _context.Cars.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
-            return entity;
-        }
+    public async Task<CarEntity?> Handle(GetCarByIdQuery query, CancellationToken cancellationToken)
+    {
+        var entity =
+            await _context.Cars.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
+        return entity;
     }
 }

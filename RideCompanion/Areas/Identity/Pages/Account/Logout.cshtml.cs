@@ -5,33 +5,35 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using User.Domain.Entities;
 
-namespace RideCompanion.Areas.Identity.Pages.Account;
-
-public class LogoutModel : PageModel
+namespace RideCompanion.Areas.Identity.Pages.Account
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly ILogger<LogoutModel> _logger;
-
-    public LogoutModel(SignInManager<IdentityUser> signInManager, ILogger<LogoutModel> logger)
+    public class LogoutModel : PageModel
     {
-        _signInManager = signInManager;
-        _logger = logger;
-    }
+        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly ILogger<LogoutModel> _logger;
 
-    public async Task<IActionResult> OnPost(string returnUrl = null)
-    {
-        await _signInManager.SignOutAsync();
-        _logger.LogInformation("User logged out.");
-        if (returnUrl != null)
+        public LogoutModel(SignInManager<UserEntity> signInManager, ILogger<LogoutModel> logger)
         {
-            return LocalRedirect(returnUrl);
+            _signInManager = signInManager;
+            _logger = logger;
         }
-        else
+
+        public async Task<IActionResult> OnPost(string returnUrl = null)
         {
-            // This needs to be a redirect so that the browser performs a new
-            // request and the identity for the user gets updated.
-            return RedirectToPage();
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                // This needs to be a redirect so that the browser performs a new
+                // request and the identity for the user gets updated.
+                return RedirectToPage();
+            }
         }
     }
 }

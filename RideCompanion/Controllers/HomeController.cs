@@ -23,9 +23,13 @@ namespace RideCompanion.Controllers;
 public class HomeController : BaseController
 {
     private static readonly string ReportsFolder = FindReportsFolder();
-        
-    public HomeController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+    private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
+
+    public HomeController(IMediator mediator, IMapper mapper)
     {
+        _mediator = mediator;
+        _mapper = mapper;
     }
 
     /// <summary>

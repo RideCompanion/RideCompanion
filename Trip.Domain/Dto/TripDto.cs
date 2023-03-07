@@ -5,6 +5,7 @@
 
 using Companion.Domain.Dto;
 using Driver.Domain.Dto;
+#pragma warning disable CS8618
 
 namespace Trip.Domain.Dto;
 
@@ -17,21 +18,36 @@ public class TripDto
     /// Id
     /// </summary>
     public Guid Id { get; set; }
+    
+    /// <summary>
+    /// Driver Id
+    /// </summary>
+    public Guid? DriverId { get; set; }
 
     /// <summary>
     /// Driver
     /// </summary>
-    public DriverDto? Driver { get; set; } = null;
+    public DriverDto Driver { get; set; }
+    
+    /// <summary>
+    /// Companion Id
+    /// </summary>
+    public Guid? CompanionId { get; set; }
     
     /// <summary>
     /// Companion
     /// </summary>
-    public CompanionDto? Companion { get; set; } = null;
+    public CompanionDto Companion { get; set; }
+     
+    /// <summary>
+    /// Car Id
+    /// </summary>
+    public Guid CarId { get; set; }
     
     /// <summary>
     /// Car
     /// </summary>
-    public CarDto? Car { get; set; } = null;
+    public CarDto Car { get; set; }
     
     /// <summary>
     /// Address from

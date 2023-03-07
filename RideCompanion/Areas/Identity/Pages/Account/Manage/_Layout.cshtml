@@ -1,14 +1,12 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "Manage your account";
-
-    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout !=  null)
     {
-        Layout = (string)parentLayout!;
+        Layout = parentLayout.ToString();
     }
     else
     {
-        Layout = "_Layout";
+        Layout = "/Views/Shared/_Layout.cshtml";
     }
 }
 
@@ -27,7 +25,6 @@
         @RenderBody()
     </div>
 </div>
-
 
 @section Scripts {
     @RenderSection("Scripts", required: false)

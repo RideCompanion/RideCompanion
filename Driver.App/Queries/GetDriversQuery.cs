@@ -12,21 +12,20 @@ namespace Driver.App.Queries;
 /// <summary>
 /// Query
 /// </summary>
-public class GetDriversQuery : IRequest<IQueryable<DriverEntity>>
+public record GetDriversQuery : IRequest<IQueryable<DriverEntity>>;
+
+public class GetDriversQueryHandler : IRequestHandler<GetDriversQuery, IQueryable<DriverEntity>>
 {
-    public class GetDriversQueryHandler : IRequestHandler<GetDriversQuery, IQueryable<DriverEntity>>
+    private readonly IApplicationDbContext _context;
+
+    public GetDriversQueryHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
+        _context = context;
+    }
 
-        public GetDriversQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public Task<IQueryable<DriverEntity>> Handle(GetDriversQuery query, CancellationToken cancellationToken)
-        {
-            var productList = _context.Drivers.Where(d => true);
-            return Task.FromResult(productList);
-        }
+    public Task<IQueryable<DriverEntity>> Handle(GetDriversQuery query, CancellationToken cancellationToken)
+    {
+        var productList = _context.Drivers.Where(d => true);
+        return Task.FromResult(productList);
     }
 }

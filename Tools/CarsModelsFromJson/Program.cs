@@ -1,11 +1,21 @@
 ﻿using System.Text.Json;
 using CarsModelsFromJson;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+ 
+var builder = new ConfigurationBuilder();
+builder.SetBasePath(Directory.GetCurrentDirectory());
+builder.AddJsonFile("appsettings.json");
+var config = builder.Build();
+var connectionString = config.GetConnectionString("DefaultConnection");
+var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+var options = optionsBuilder.UseNpgsql(connectionString).Options;
 
 var carsModels = JsonSerializer.Deserialize<IList<CarModelDto>>(
     await File.ReadAllTextAsync("all-vehicles-model.json")
 );
 
-await using var db = new ApplicationContext();
+await using var db = new ApplicationContext(options);
 
 db.RemoveRange(db.CarModels);
 db.RemoveRange(db.CarBrands);

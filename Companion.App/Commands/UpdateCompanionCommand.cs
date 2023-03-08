@@ -12,49 +12,41 @@ using System.Security.Claims;
 namespace Companion.App.Commands;
 
 /// <summary>
-/// Command
+/// Update companion command
 /// </summary>
-public class UpdateCompanionCommand : IRequest<Guid>
+public record UpdateCompanionCommand(CompanionDto Dto) : IRequest<Guid>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class UpdateCompanionCommandHandler : IRequestHandler<UpdateCompanionCommand, Guid>
 {
-    public UpdateCompanionCommand(CompanionDto dto)
+    private readonly IApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public UpdateCompanionCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
-        Dto = dto;
+        _context = context;
+        _httpContextAccessor = httpContextAccessor;
     }
 
-    public CompanionDto Dto { get; set; }
-
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class UpdateCompanionCommandHandler : IRequestHandler<UpdateCompanionCommand, Guid>
+    public async Task<Guid> Handle(UpdateCompanionCommand command, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        var entity = _context.Companions.FirstOrDefault(e => e.Id == command.Dto.Id);
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public UpdateCompanionCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
-        {
-            _context = context;
-            _httpContextAccessor = httpContextAccessor;
-        }
-
-        public async Task<Guid> Handle(UpdateCompanionCommand command, CancellationToken cancellationToken)
-        {
-            var entity = _context.Companions.FirstOrDefault(e => e.Id == command.Dto.Id);
-            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (entity == null)
-                return command.Dto.Id;
-
-            entity.UserId = command.Dto.UserId;
-            entity.FullName = command.Dto.FullName;
-            entity.BirthDate = command.Dto.BirthDate;
-            entity.PhoneNumber = command.Dto.PhoneNumber;
-            entity.UpdateById = Guid.Parse(userId!);
-            entity.UpdateDate = DateTime.Now;
-
-            _context.Companions.Update(entity);
-            await _context.SaveChanges();
+        if (entity == null)
             return command.Dto.Id;
-        }
+
+        entity.UserId = command.Dto.UserId;
+        entity.FullName = command.Dto.FullName;
+        entity.BirthDate = command.Dto.BirthDate;
+        entity.PhoneNumber = command.Dto.PhoneNumber;
+        entity.UpdateById = Guid.Parse(userId!);
+        entity.UpdateDate = DateTime.Now;
+
+        _context.Companions.Update(entity);
+        await _context.SaveChanges();
+        return command.Dto.Id;
     }
 }

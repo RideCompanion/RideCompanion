@@ -10,27 +10,29 @@ using Shared.Migrations;
 namespace Companion.App.Queries;
 
 /// <summary>
-/// Query
+/// Get companions by user id query
 /// </summary>
-public class GetCompanionsQuery : IRequest<IQueryable<CompanionEntity>>
+public record GetCompanionsQuery : IRequest<IQueryable<CompanionEntity>>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class GetCompanionsQueryHandler : IRequestHandler<GetCompanionsQuery, IQueryable<CompanionEntity>>
 {
-    public class GetCompanionsQueryHandler : IRequestHandler<GetCompanionsQuery, IQueryable<CompanionEntity>>
+    private readonly IApplicationDbContext _context;
+
+    public GetCompanionsQueryHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
+        _context = context;
+    }
 
-        public GetCompanionsQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
+    public Task<IQueryable<CompanionEntity>> Handle(GetCompanionsQuery query, CancellationToken cancellationToken)
+    {
+        if (_context.Companions == null)
+            throw new Exception("Exception(1000): _context.Companions is null.");
 
-        public Task<IQueryable<CompanionEntity>> Handle(GetCompanionsQuery query, CancellationToken cancellationToken)
-        {
-            if (_context.Companions == null) 
-                throw new Exception("Exception(1000): _context.Companions is null.");
-                
-            var entities = _context.Companions.Where(d => true);
-                
-            return Task.FromResult(entities);
-        }
+        var entities = _context.Companions.Where(d => true);
+
+        return Task.FromResult(entities);
     }
 }

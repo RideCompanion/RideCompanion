@@ -9,39 +9,33 @@ using Shared.Migrations;
 namespace Driver.App.Commands;
 
 /// <summary>
-/// Command
+/// Delete driver command
 /// </summary>
-public class DeleteDriverCommand : IRequest<Guid>
+public record DeleteDriverCommand(Guid DriverId) : IRequest<Guid>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class DeleteDriverCommandHandler : IRequestHandler<DeleteDriverCommand, Guid>
 {
-    // ----------------------------
-    // Props
-    // ----------------------------
-    public Guid DriverId { get; set; }
-    
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class DeleteDriverCommandHandler : IRequestHandler<DeleteDriverCommand, Guid>
+    private readonly IApplicationDbContext _context;
+
+    public DeleteDriverCommandHandler(IApplicationDbContext context)
     {
-        private readonly IApplicationDbContext _context;
+        _context = context;
+    }
 
-        public DeleteDriverCommandHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-        
-        public async Task<Guid> Handle(DeleteDriverCommand command, CancellationToken cancellationToken)
-        {
-            var entity = _context.Drivers.FirstOrDefault(e => e.Id == command.DriverId);
-            
-            if (entity != null)
-            {
-                _context.Drivers.Remove(entity);
-                await _context.SaveChanges();
-                return entity.Id;
-            }
+    public async Task<Guid> Handle(DeleteDriverCommand command, CancellationToken cancellationToken)
+    {
+        var entity = _context.Drivers.FirstOrDefault(e => e.Id == command.DriverId);
 
-            return command.DriverId;
+        if (entity != null)
+        {
+            _context.Drivers.Remove(entity);
+            await _context.SaveChanges();
+            return entity.Id;
         }
+
+        return command.DriverId;
     }
 }

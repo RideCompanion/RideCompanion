@@ -30,6 +30,7 @@ builder.Services.AddMediatR(MediatRConfigurationExtension.Configuration());
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ITripBuilder, TripBuilder>();
+builder.Services.AddScoped<ITripDirector, TripDirector>();
 
 builder.Services.AddTransient<CacheService>();
 builder.Services.AddMemoryCache();

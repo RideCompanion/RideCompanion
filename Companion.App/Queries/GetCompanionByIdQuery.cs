@@ -11,28 +11,25 @@ using Microsoft.EntityFrameworkCore;
 namespace Companion.App.Queries;
 
 /// <summary>
-/// Query
+/// Get companion by id query
 /// </summary>
-public class GetCompanionByIdQuery : IRequest<CompanionEntity?>
+public record GetCompanionByIdQuery(Guid Id) : IRequest<CompanionEntity?>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class GetCompanionByIdQueryHandler : IRequestHandler<GetCompanionByIdQuery, CompanionEntity?>
 {
-    public GetCompanionByIdQuery(Guid id)
+    private readonly IApplicationDbContext _context;
+
+    public GetCompanionByIdQueryHandler(IApplicationDbContext context)
     {
-        Id = id;
+        _context = context;
     }
 
-    public Guid Id { get; set; }
-    
-    public class GetCompanionByIdQueryHandler : IRequestHandler<GetCompanionByIdQuery,CompanionEntity?>
+    public async Task<CompanionEntity?> Handle(GetCompanionByIdQuery query, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        public GetCompanionByIdQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-        public async Task<CompanionEntity?> Handle(GetCompanionByIdQuery query, CancellationToken cancellationToken)
-        {
-            var data = await _context.Companions.FirstOrDefaultAsync(d => d.Id == query.Id);
-            return data;
-        }
+        var data = await _context.Companions.FirstOrDefaultAsync(d => d.Id == query.Id);
+        return data;
     }
 }

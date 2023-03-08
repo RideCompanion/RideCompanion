@@ -10,30 +10,25 @@ using Shared.Migrations;
 namespace Companion.App.Queries;
 
 /// <summary>
-/// Query
+/// Get companions by user id query
 /// </summary>
-public class GetCompanionsByUserIdQuery : IRequest<IQueryable<CompanionEntity>>
+public record GetCompanionsByUserIdQuery(Guid Id) : IRequest<IQueryable<CompanionEntity>>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class GetCompanionsByUserIdQueryHandler : IRequestHandler<GetCompanionsByUserIdQuery, IQueryable<CompanionEntity>>
 {
-    public GetCompanionsByUserIdQuery(Guid id)
+    private readonly IApplicationDbContext _context;
+
+    public GetCompanionsByUserIdQueryHandler(IApplicationDbContext context)
     {
-        Id = id;
+        _context = context;
     }
 
-    public Guid Id { get; set; }
-
-    public class GetCompanionsByUserIdQueryHandler : IRequestHandler<GetCompanionsByUserIdQuery, IQueryable<CompanionEntity>>
+    public Task<IQueryable<CompanionEntity>> Handle(GetCompanionsByUserIdQuery query, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-
-        public GetCompanionsByUserIdQueryHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public Task<IQueryable<CompanionEntity>> Handle(GetCompanionsByUserIdQuery query, CancellationToken cancellationToken)
-        {
-            var productList = _context.Companions.Where(d => d.Id == query.Id);
-            return Task.FromResult(productList);
-        }
+        var productList = _context.Companions.Where(d => d.UserId == query.Id);
+        return Task.FromResult(productList);
     }
 }

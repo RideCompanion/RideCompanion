@@ -36,9 +36,9 @@ public class CreateTripCommandHandler : IRequestHandler<CreateTripCommand, Guid>
         {
             Id = default,
 
-            DriverId = command.TripDto.Driver.Id,
-            CompanionId = command.TripDto.Companion.Id,
-            CarId = command.TripDto.Car.Id,
+            DriverId = command.TripDto.DriverId,
+            CompanionId = command.TripDto.CompanionId,
+            CarId = command.TripDto.CarId,
             AddressFrom = command.TripDto.AddressFrom,
             AddressTo = command.TripDto.AddressTo,
             DateTime = command.TripDto.DateTime,

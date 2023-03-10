@@ -3,6 +3,10 @@
     Layout = "_Layout";
 }
 
+<div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+    <div id="chart">
+    </div>
+</div>
 
 <div class="grid grid-cols-3 gap-4 mb-4">
     <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
@@ -16,69 +20,54 @@
     </div>
 </div>
 
-<div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-    <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-</div>
+@section Scripts {
 
-<div class="grid grid-cols-2 gap-4 mb-4">
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-    </div>
-</div>
+  <script type="text/javascript">
 
-<div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-    <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-</div>
+    var options = {
+      series: [
+        {
+          name: "series1",
+          data: [31, 40, 28, 51, 42, 109, 100]
+        },
+        {
+          name: "series2",
+          data: [11, 32, 45, 32, 34, 52, 41]
+        }
+      ],
+      chart: {
+        width: '100%',
+        height: 300,
+        type: "area"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: "smooth"
+      },
+      xaxis: {
+        type: "datetime",
+        categories: [
+          "2018-09-19T00:00:00.000Z",
+          "2018-09-19T01:30:00.000Z",
+          "2018-09-19T02:30:00.000Z",
+          "2018-09-19T03:30:00.000Z",
+          "2018-09-19T04:30:00.000Z",
+          "2018-09-19T05:30:00.000Z",
+          "2018-09-19T06:30:00.000Z"
+        ]
+      },
+      tooltip: {
+        x: {
+          format: "dd/MM/yy HH:mm"
+        }
+      }
+    };
+    
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
 
-<div class="grid grid-cols-2 gap-4">
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-    </div>
-</div>
-
-<div class="grid grid-cols-3 gap-4">
-    <div class="h-fit flex-1 space-y-4 rounded-md bg-white p-6 shadow-md">
-        <h3 class="text-lg font-bold dark:text-white">Responsive variants</h3>
-        <h3 class="font-light text-gray-500 dark:text-gray-400">The container class also includes responsive variants like md:container by default that allow you to make something behave like a container at only a certain breakpoint and up:</h3>
-        <button class="btn-primary">Save</button>
-    </div>
-    <div class="h-fit flex-1 space-y-4 rounded-md bg-white p-6 shadow-md">
-        <h3 class="text-lg font-bold dark:text-white">Responsive variants</h3>
-        <h3 class="font-light text-gray-500 dark:text-gray-400">The container class also includes responsive variants like md:container by default that allow you to make something behave like a container at only a certain breakpoint and up:</h3>
-        <button class="btn-primary">Save</button>
-    </div>
-    <div class="h-fit flex-1 space-y-4 rounded-md bg-white p-6 shadow-md">
-        <h3 class="text-lg font-bold dark:text-white">Responsive variants</h3>
-        <h3 class="font-light text-gray-500 dark:text-gray-400">The container class also includes responsive variants like md:container by default that allow you to make something behave like a container at only a certain breakpoint and up:</h3>
-        <button class="btn-primary">Save</button>
-    </div>
-</div>
-
-<div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-    <div class="relative">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-            </svg>
-        </div>
-        <input datepicker datepicker-format="dd/mm/yyyy" type="text" id="birthDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
-    </div>
-</div>
+  </script>
+    
+}

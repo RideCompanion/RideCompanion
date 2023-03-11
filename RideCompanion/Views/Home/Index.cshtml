@@ -21,51 +21,72 @@
 @section Scripts {
 
   <script type="text/javascript">
-
-    var options = {
-      series: [
-        {
-          name: "Drivers count",
-          data: [31, 40, 28, 51, 42, 109, 100]
-        },
-        {
-          name: "Companions count",
-          data: [11, 32, 45, 32, 34, 52, 41]
-        }
-      ],
-      chart: {
-        width: '100%',
-        height: 400,
-        type: "area"
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: "smooth"
-      },
-      xaxis: {
-        type: "date",
-        categories: [
-          "2018.09.19",
-          "2018.09.20",
-          "2018.09.21",
-          "2018.09.22",
-          "2018.09.23",
-          "2018.09.24",
-          "2018.09.25"
-        ]
-      },
-      tooltip: {
-        x: {
-          format: "dd.MM.yy"
-        }
-      }
-    };
+  
+    window.onload = function() {
+      SetChartData();
+    }
     
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
-    chart.render();
+    function GetChartData()
+    {
+      var data = [];
+      $.ajax({
+        url: '@Url.Action("DriverCompanionChart", "Home")',
+        type: 'GET',
+        dataType: 'json',
+        async: false,
+        success: function (result) {
+          data = result;
+        }
+      });
+      return data;
+    }
+
+    function SetChartData() {
+      const options = {
+            series: [
+              {
+                name: "Drivers count",
+                data: [31, 40, 28, 51, 42, 109, 100]
+              },
+              {
+                name: "Companions count",
+                data: [11, 32, 45, 32, 34, 52, 41]
+              }
+            ],
+            chart: {
+              width: '100%',
+              height: 400,
+              type: "area"
+            },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              curve: "smooth"
+            },
+            xaxis: {
+              type: "date",
+              categories: [
+                "2018.09.19",
+                "2018.09.20",
+                "2018.09.21",
+                "2018.09.22",
+                "2018.09.23",
+                "2018.09.24",
+                "2018.09.25"
+              ]
+            },
+            tooltip: {
+              x: {
+                format: "dd.MM.yy"
+              }
+            }
+          };
+          
+          const chart = new ApexCharts(document.querySelector("#chart"), options);
+          chart.render();
+    }
 
   </script>
-    
+
 }

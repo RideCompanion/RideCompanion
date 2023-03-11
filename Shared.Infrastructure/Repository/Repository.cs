@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Shared.Abstractions.Entities;
 using Shared.Migrations;
 
-namespace Shared.Repository.Repository;
+namespace Shared.Infrastructure.Repository;
 
 public class Repository<T> : IRepository<T> where T : BaseEntity
 {

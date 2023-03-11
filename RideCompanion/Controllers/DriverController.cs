@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RideCompanion.Controllers.Base;
 using RideCompanion.ViewModels;
-using Shared.Repository.CacheService;
+using Shared.Infrastructure.CacheService;
 using Trip.App.Queries;
 using Trip.Domain.Dto;
 

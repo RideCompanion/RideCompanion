@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace Shared.Repository.CacheService;
+namespace Shared.Infrastructure.CacheService;
 
 public class CacheService
 {

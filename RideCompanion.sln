@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Core", "Shared.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Migrations", "Shared.Migrations\Shared.Migrations.csproj", "{A91B69B3-F206-47D9-8AB1-9D08BE528AB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Repository", "Shared.Repository\Shared.Repository.csproj", "{B51A150F-D586-48DE-9E13-C96EF9A8F855}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Infrastructure", "Shared.Infrastructure\Shared.Infrastructure.csproj", "{B51A150F-D586-48DE-9E13-C96EF9A8F855}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driver", "Driver", "{E9348388-B4BE-4AE3-8799-FFAD7B486837}"
 EndProject

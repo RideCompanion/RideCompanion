@@ -19,8 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Views\Auth\SignIn.cshtml" />
-      <AdditionalFiles Include="Views\Auth\SignUp.cshtml" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="7.0.3" />
     </ItemGroup>
 
 </Project>

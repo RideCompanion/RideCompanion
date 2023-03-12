@@ -20,7 +20,6 @@ namespace RideCompanion.Controllers;
 /// <summary>
 /// Home controller
 /// </summary>
-[Authorize]
 public class HomeController : BaseController
 {
     private static readonly string ReportsFolder = FindReportsFolder();

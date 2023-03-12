@@ -16,7 +16,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
     public Repository(ApplicationDbContext context)
     {
-        this._context = context;
+        _context = context;
         _entities = context.Set<T>();
     }
 

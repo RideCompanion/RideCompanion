@@ -23,8 +23,4 @@
       <AdditionalFiles Include="Views\Auth\SignUp.cshtml" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Pages\" />
-    </ItemGroup>
-
 </Project>

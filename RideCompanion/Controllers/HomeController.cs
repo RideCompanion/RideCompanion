@@ -6,6 +6,7 @@
 using System.Data;
 using System.Diagnostics;
 using AutoMapper;
+using Driver.Domain.Dto;
 using FastReport.Utils;
 using FastReport.Web;
 using MediatR;
@@ -50,6 +51,26 @@ public class HomeController : BaseController
     public IActionResult Index(int? reportIndex)
     {
         return View();
+    }
+    
+    public DriverCompanionChartDto DriverCompanionChart()
+    {
+        
+        
+        var data = new DriverCompanionChartDto
+        {
+            DriverSeries = new int[]
+            {
+            },
+            CompanionSeries = new int[]
+            {
+            },
+            Dates = new DateOnly[]
+            {
+            }
+        };
+        
+        return new DriverCompanionChartDto();
     }
 
     /// <summary>

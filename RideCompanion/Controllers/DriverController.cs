@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using RideCompanion.Controllers.Base;
 using RideCompanion.ViewModels;
-using Shared.Repository.CacheService;
+using Shared.Infrastructure.CacheService;
 using Trip.App.Queries;
 using Trip.Domain.Dto;
 
@@ -79,12 +79,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> UpdateDriver(DriverViewModel viewModel)
     {
-        await _mediator.Send(new UpdateDriverCommand
-        {
-            DriverId = viewModel.DriverDto.Id,
-            DriverDto = viewModel.DriverDto
-        });
-
+        await _mediator.Send(new UpdateDriverCommand(viewModel.DriverDto.Id, viewModel.DriverDto));
         return RedirectToAction("Index");
     }
 
@@ -95,11 +90,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> DeleteDriver(Guid id)
     {
-        await _mediator.Send(new DeleteDriverCommand
-        {
-            DriverId = id
-        });
-
+        await _mediator.Send(new DeleteDriverCommand(id));
         return RedirectToAction("Index");
     }
 
@@ -146,15 +137,7 @@ public class DriverController : BaseController
     /// <returns> Redirect to index page </returns>
     public async Task<IActionResult> CreateCar(DriverViewModel viewModel)
     {
-        await _mediator.Send(new CreateCarCommand
-        {
-            DriverId = viewModel.DriverDto.Id,
-            Number = viewModel.CarDto.Number,
-            Color = viewModel.CarDto.Color,
-            Brand = viewModel.CarDto.Brand,
-            Model = viewModel.CarDto.Model
-        });
-
+        await _mediator.Send(new CreateCarCommand(viewModel.DriverDto.Id, viewModel.CarDto));
         return RedirectToAction("DriverDetail", new { id = viewModel.CarDto.DriverId });
     }
 
@@ -181,10 +164,7 @@ public class DriverController : BaseController
 
         if (carEntity is not null)
         {
-            await _mediator.Send(new DeleteCarCommand
-            {
-                CarId = id
-            });
+            await _mediator.Send(new DeleteCarCommand(id));
         }
 
         return RedirectToAction("DriverDetail", new { id = carEntity?.DriverId });

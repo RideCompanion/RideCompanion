@@ -10,10 +10,13 @@ using Shared.Migrations;
 namespace Driver.App.Queries;
 
 /// <summary>
-/// Query
+/// Get drivers query
 /// </summary>
 public record GetDriversQuery : IRequest<IQueryable<DriverEntity>>;
 
+/// <summary>
+/// Handler
+/// </summary>
 public class GetDriversQueryHandler : IRequestHandler<GetDriversQuery, IQueryable<DriverEntity>>
 {
     private readonly IApplicationDbContext _context;
@@ -25,7 +28,7 @@ public class GetDriversQueryHandler : IRequestHandler<GetDriversQuery, IQueryabl
 
     public Task<IQueryable<DriverEntity>> Handle(GetDriversQuery query, CancellationToken cancellationToken)
     {
-        var productList = _context.Drivers.Where(d => true);
-        return Task.FromResult(productList);
+        var entity = _context.Drivers.Where(d => true);
+        return Task.FromResult(entity);
     }
 }

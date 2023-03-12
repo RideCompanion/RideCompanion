@@ -12,52 +12,44 @@ using Shared.Migrations;
 namespace Driver.App.Commands;
 
 /// <summary>
-/// Command
+/// Update car command
 /// </summary>
-public class UpdateCarCommand : IRequest<Guid>
+public record UpdateCarCommand(CarDto CarDto) : IRequest<Guid>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class UpdateCarCommandHandler : IRequestHandler<UpdateCarCommand, Guid>
 {
-    private CarDto CarDto { get; set; }
+    private readonly IApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public UpdateCarCommand(CarDto carDto)
+    public UpdateCarCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
-        CarDto = carDto;
+        _context = context;
+        _httpContextAccessor = httpContextAccessor;
     }
-    
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class UpdateCarCommandHandler : IRequestHandler<UpdateCarCommand, Guid>
+
+    public async Task<Guid> Handle(UpdateCarCommand command, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        
-        public UpdateCarCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
-        {
-            _context = context;
-            _httpContextAccessor = httpContextAccessor;
-        }
-        
-        public async Task<Guid> Handle(UpdateCarCommand command, CancellationToken cancellationToken)
-        {
-            var entity = _context.Cars.FirstOrDefault(e => e.Id == command.CarDto.Id);
-            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
-            if (entity != null)
-            {
-                entity.DriverId = command.CarDto.DriverId;
-                entity.UserId = Guid.Parse(userId!);
-                entity.Number = command.CarDto.Number;
-                entity.Color = command.CarDto.Color;
-                entity.Model = command.CarDto.Model;
-                entity.UpdateById = Guid.Parse(userId!);
-                entity.UpdateDate = DateTime.Now;
+        var entity = _context.Cars.FirstOrDefault(e => e.Id == command.CarDto.Id);
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                _context.Cars.Update(entity);
-                await _context.SaveChanges();
-                return entity.Id;
-            }
+        if (entity != null)
+        {
+            entity.DriverId = command.CarDto.DriverId;
+            entity.UserId = Guid.Parse(userId!);
+            entity.Number = command.CarDto.Number;
+            entity.Color = command.CarDto.Color;
+            entity.Model = command.CarDto.Model;
+            entity.UpdateById = Guid.Parse(userId!);
+            entity.UpdateDate = DateTime.Now;
 
-            return command.CarDto.Id;
+            _context.Cars.Update(entity);
+            await _context.SaveChanges();
+            return entity.Id;
         }
+
+        return command.CarDto.Id;
     }
 }

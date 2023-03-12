@@ -11,10 +11,13 @@ using Shared.Migrations;
 namespace Driver.App.Queries;
 
 /// <summary>
-/// Query
+/// Get car models query
 /// </summary>
 public record GetCarModelsQuery : IRequest<IReadOnlyList<CarModelEntity>>;
 
+/// <summary>
+/// Handler
+/// </summary>
 public class GetCarModelsQueryHandler : IRequestHandler<GetCarModelsQuery, IReadOnlyList<CarModelEntity>>
 {
     private readonly IApplicationDbContext _context;

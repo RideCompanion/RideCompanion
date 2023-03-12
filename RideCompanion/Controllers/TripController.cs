@@ -48,7 +48,6 @@ public class TripController : BaseController
     /// <returns> View </returns>
     public async Task<IActionResult> Index()
     {
-        var tripList = await _mediator.Send(new GetTripsQuery());
         var userId = _userManager.GetUserId(User);
         
         if(userId == null)

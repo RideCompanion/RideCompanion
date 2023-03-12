@@ -11,12 +11,13 @@ using Shared.Migrations;
 namespace Driver.App.Queries;
 
 /// <summary>
-/// Query
+/// Get driver by id query
 /// </summary>
-public record GetDriverByIdQuery(
-    Guid Id
-) : IRequest<DriverEntity?>;
+public record GetDriverByIdQuery(Guid Id) : IRequest<DriverEntity?>;
 
+/// <summary>
+/// Handler
+/// </summary>
 public class GetDriverByIdQueryHandler : IRequestHandler<GetDriverByIdQuery, DriverEntity?>
 {
     private readonly IApplicationDbContext _context;
@@ -28,8 +29,7 @@ public class GetDriverByIdQueryHandler : IRequestHandler<GetDriverByIdQuery, Dri
 
     public async Task<DriverEntity?> Handle(GetDriverByIdQuery query, CancellationToken cancellationToken)
     {
-        var entity =
-            await _context.Drivers.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
+        var entity = await _context.Drivers.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
         return entity;
     }
 }

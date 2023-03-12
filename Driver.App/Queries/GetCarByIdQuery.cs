@@ -11,12 +11,13 @@ using Shared.Migrations;
 namespace Driver.App.Queries;
 
 /// <summary>
-/// Query
+/// Get car by id query
 /// </summary>
-public record GetCarByIdQuery(
-    Guid Id
-) : IRequest<CarEntity?>;
+public record GetCarByIdQuery(Guid Id) : IRequest<CarEntity?>;
 
+/// <summary>
+/// Handler
+/// </summary>
 public class GetCarByIdQueryHandler : IRequestHandler<GetCarByIdQuery, CarEntity?>
 {
     private readonly IApplicationDbContext _context;
@@ -28,8 +29,7 @@ public class GetCarByIdQueryHandler : IRequestHandler<GetCarByIdQuery, CarEntity
 
     public async Task<CarEntity?> Handle(GetCarByIdQuery query, CancellationToken cancellationToken)
     {
-        var entity =
-            await _context.Cars.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
-        return entity;
+        var result = await _context.Cars.FirstOrDefaultAsync(d => d.Id == query.Id, cancellationToken: cancellationToken);
+        return result;
     }
 }

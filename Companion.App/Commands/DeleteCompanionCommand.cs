@@ -9,41 +9,33 @@ using Shared.Migrations;
 namespace Companion.App.Commands;
 
 /// <summary>
-/// Command
+/// Delete companion command
 /// </summary>
-public class DeleteCompanionCommand : IRequest<Guid>
+public record DeleteCompanionCommand(Guid Id) : IRequest<Guid>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class DeleteCompanionCommandHandler : IRequestHandler<DeleteCompanionCommand, Guid>
 {
-    public DeleteCompanionCommand(Guid id)
+    private readonly IApplicationDbContext _context;
+
+    public DeleteCompanionCommandHandler(IApplicationDbContext context)
     {
-        Id = id;
+        _context = context;
     }
 
-    public Guid Id { get; set; }
-    
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class DeleteCompanionCommandHandler : IRequestHandler<DeleteCompanionCommand, Guid>
+    public async Task<Guid> Handle(DeleteCompanionCommand command, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        
-        public DeleteCompanionCommandHandler(IApplicationDbContext context)
-        {
-            _context = context;
-        }
-        
-        public async Task<Guid> Handle(DeleteCompanionCommand command, CancellationToken cancellationToken)
-        {
-            var entity = _context.Companions.FirstOrDefault(e => e.Id == command.Id);
-            
-            if (entity != null)
-            {
-                _context.Companions.Remove(entity);
-                await _context.SaveChanges();
-                return entity.Id;
-            }
+        var entity = _context.Companions.FirstOrDefault(e => e.Id == command.Id);
 
-            return command.Id;
+        if (entity != null)
+        {
+            _context.Companions.Remove(entity);
+            await _context.SaveChanges();
+            return entity.Id;
         }
+
+        return command.Id;
     }
 }

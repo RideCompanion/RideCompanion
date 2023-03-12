@@ -5,7 +5,7 @@
 
 using Shared.Abstractions.Entities;
 
-namespace Shared.Repository.Repository;
+namespace Shared.Infrastructure.Repository;
 
 public interface IRepository<T> where T : BaseEntity
 {

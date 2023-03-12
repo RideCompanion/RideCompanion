@@ -8,62 +8,53 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Shared.Migrations;
 using System.Security.Claims;
+using Driver.Domain.Dto;
 
 namespace Driver.App.Commands;
 
 /// <summary>
-/// Command
+/// Create car command
 /// </summary>
-public class CreateCarCommand : IRequest<Guid>
+public record CreateCarCommand(Guid DriverId, CarDto CarDto) : IRequest<Guid>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, Guid>
 {
-    public Guid DriverId { get; set; }
+    private readonly IApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public string? Number { get; set; }
-
-    public string? Color { get; set; }
-
-    public string? Brand { get; set; }
-    public string? Model { get; set; }
-
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class CreateCarCommandHandler : IRequestHandler<CreateCarCommand, Guid>
+    public CreateCarCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _context = context;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-        public CreateCarCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+    public async Task<Guid> Handle(CreateCarCommand command, CancellationToken cancellationToken)
+    {
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        var entity = new CarEntity
         {
-            _context = context;
-            _httpContextAccessor = httpContextAccessor;
-        }
+            Id = default,
 
-        public async Task<Guid> Handle(CreateCarCommand command, CancellationToken cancellationToken)
-        {
-            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            DriverId = command.DriverId,
+            UserId = Guid.Parse(userId!),
+            Number = command.CarDto.Number,
+            Color = command.CarDto.Color,
+            Brand = command.CarDto.Brand,
+            Model = command.CarDto.Model,
 
-            var entity = new CarEntity
-            {
-                Id = default,
+            CreatedById = Guid.Parse(userId!),
+            CreateDate = DateTime.Now,
+            UpdateById = Guid.Parse(userId!),
+            UpdateDate = DateTime.Now,
+            IsDeleted = false
+        };
 
-                DriverId = command.DriverId,
-                UserId = Guid.Parse(userId!),
-                Number = command.Number,
-                Color = command.Color,
-                Brand = command.Brand,
-                Model = command.Model,
-
-                CreatedById = Guid.Parse(userId!),
-                CreateDate = DateTime.Now,
-                UpdateById = Guid.Parse(userId!),
-                UpdateDate = DateTime.Now,
-                IsDeleted = false
-            };
-
-            _context.Cars.Add(entity);
-            await _context.SaveChanges();
-            return entity.Id;
-        }
+        _context.Cars.Add(entity);
+        await _context.SaveChanges();
+        return entity.Id;
     }
 }

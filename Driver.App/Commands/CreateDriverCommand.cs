@@ -12,53 +12,43 @@ using Shared.Migrations;
 namespace Driver.App.Commands;
 
 /// <summary>
-/// Command
+/// Create driver command
 /// </summary>
-public class CreateDriverCommand : IRequest<Guid>
-{
-    private string? FullName { get; }
-    private DateTime BirthDate { get; }
+public record CreateDriverCommand(string? FullName, DateTime BirthDate) : IRequest<Guid>;
 
-    public CreateDriverCommand(string? fullName, DateTime birthDate)
+/// <summary>
+/// Handler
+/// </summary>
+public class CreateDriverCommandHandler : IRequestHandler<CreateDriverCommand, Guid>
+{
+    private readonly IApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public CreateDriverCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
-        FullName = fullName;
-        BirthDate = birthDate;
+        _context = context;
+        _httpContextAccessor = httpContextAccessor;
     }
-    
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class CreateDriverCommandHandler : IRequestHandler<CreateDriverCommand, Guid>
+
+    public async Task<Guid> Handle(CreateDriverCommand command, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        
-        public CreateDriverCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        var entity = new DriverEntity
         {
-            _context = context;
-            _httpContextAccessor = httpContextAccessor;
-        }
-        
-        public async Task<Guid> Handle(CreateDriverCommand command, CancellationToken cancellationToken)
-        {
-            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            
-            var entity = new DriverEntity
-            {
-                Id = default,
-                UserId = Guid.Parse(userId!),
-                FullName = command.FullName,
-                BirthDate = command.BirthDate,
-                CreatedById = Guid.Parse(userId!),
-                CreateDate = DateTime.Now,
-                UpdateById = Guid.Parse(userId!),
-                UpdateDate = DateTime.Now,
-                IsDeleted = false
-            };
-            
-            _context.Drivers.Add(entity);
-            await _context.SaveChanges();
-            return entity.Id;
-        }
+            Id = default,
+            UserId = Guid.Parse(userId!),
+            FullName = command.FullName,
+            BirthDate = command.BirthDate,
+            CreatedById = Guid.Parse(userId!),
+            CreateDate = DateTime.Now,
+            UpdateById = Guid.Parse(userId!),
+            UpdateDate = DateTime.Now,
+            IsDeleted = false
+        };
+
+        _context.Drivers.Add(entity);
+        await _context.SaveChanges();
+        return entity.Id;
     }
 }

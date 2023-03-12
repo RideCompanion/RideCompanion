@@ -4,7 +4,9 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using RideCompanion.Extensions;
 using Shared.Migrations;
-using Shared.Repository.CacheService;
+using Shared.Infrastructure.CacheService;
+using Shared.Infrastructure.Services;
+using Shared.Infrastructure.Services.Interfaces;
 using Trip.App.TripBuilder;
 using User.Domain.Entities;
 
@@ -30,6 +32,8 @@ builder.Services.AddMediatR(MediatRConfigurationExtension.Configuration());
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
 builder.Services.AddScoped<ITripBuilder, TripBuilder>();
+builder.Services.AddScoped<ITripDirector, TripDirector>();
+builder.Services.AddSingleton<IChartService, ChartService>();
 
 builder.Services.AddTransient<CacheService>();
 builder.Services.AddMemoryCache();

@@ -12,47 +12,42 @@ using Shared.Migrations;
 namespace Driver.App.Commands;
 
 /// <summary>
-/// Command
+/// Update driver command
 /// </summary>
-public class UpdateDriverCommand : IRequest<Guid>
+public record UpdateDriverCommand(Guid DriverId, DriverDto? DriverDto) : IRequest<Guid>;
+
+/// <summary>
+/// Handler
+/// </summary>
+public class UpdateDriverCommandHandler : IRequestHandler<UpdateDriverCommand, Guid>
 {
-    public Guid DriverId { get; set; }
-    public DriverDto? DriverDto { get; set; }
+    private readonly IApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    /// <summary>
-    /// Handler
-    /// </summary>
-    public class UpdateDriverCommandHandler : IRequestHandler<UpdateDriverCommand, Guid>
+    public UpdateDriverCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _context = context;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-        public UpdateDriverCommandHandler(IApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
-        {
-            _context = context;
-            _httpContextAccessor = httpContextAccessor;
-        }
+    public async Task<Guid> Handle(UpdateDriverCommand command, CancellationToken cancellationToken)
+    {
+        var entity = _context.Drivers.FirstOrDefault(d => command.DriverDto != null && d.Id == command.DriverDto.Id);
+        var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public async Task<Guid> Handle(UpdateDriverCommand command, CancellationToken cancellationToken)
-        {
-            var entity = _context.Drivers.FirstOrDefault(d => command.DriverDto != null && d.Id == command.DriverDto.Id);
-            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (entity == null)
+            return command.DriverId;
 
-            if (entity == null) 
-                return command.DriverId;
-            
-            entity.FullName = command.DriverDto?.FullName;
-                
-            if (command.DriverDto != null) 
-                entity.BirthDate = command.DriverDto.BirthDate;
-                
-            entity.UpdateById = Guid.Parse(userId!);
-            entity.UpdateDate = DateTime.Now;
+        entity.FullName = command.DriverDto?.FullName;
 
-            _context.Drivers.Update(entity);
-            await _context.SaveChanges();
-            return entity.Id;
+        if (command.DriverDto != null)
+            entity.BirthDate = command.DriverDto.BirthDate;
 
-        }
+        entity.UpdateById = Guid.Parse(userId!);
+        entity.UpdateDate = DateTime.Now;
+
+        _context.Drivers.Update(entity);
+        await _context.SaveChanges();
+        return entity.Id;
     }
 }

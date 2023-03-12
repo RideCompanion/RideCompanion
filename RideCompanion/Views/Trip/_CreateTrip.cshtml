@@ -45,18 +45,18 @@
         @if (true)
         {
             <div class="mb-6">
-                <label asp-for="@Model.TripDto!.Driver" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label asp-for="@Model.TripDto!.DriverId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Select driver
                 </label>
-                <select asp-for="@Model.TripDto!.Driver" asp-items="ViewBag.Drivers" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select asp-for="@Model.TripDto!.DriverId" asp-items="ViewBag.Drivers" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected value="Null">Select driver</option>
                 </select>
             </div>
             <div class="mb-6">
-                <label asp-for="@Model.TripDto!.Car" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label asp-for="@Model.TripDto!.CarId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Select car
                 </label>
-                <select asp-for="@Model.TripDto!.Car" asp-items="ViewBag.Cars" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select asp-for="@Model.TripDto!.CarId" asp-items="ViewBag.Cars" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected value="Null">Select car</option>
                 </select>
             </div>
@@ -65,10 +65,10 @@
         @if (true)
         {
             <div class="mb-6">
-                <label asp-for="@Model.TripDto!.Companion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label asp-for="@Model.TripDto!.CompanionId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Select companion
                 </label>
-                <select asp-for="@Model.TripDto!.Companion" asp-items="ViewBag.Companions" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select asp-for="@Model.TripDto!.CompanionId" asp-items="ViewBag.Companions" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected value="Null">Select companion</option>
                 </select>
             </div>

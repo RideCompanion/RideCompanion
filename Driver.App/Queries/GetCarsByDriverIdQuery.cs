@@ -10,12 +10,13 @@ using Shared.Migrations;
 namespace Driver.App.Queries;
 
 /// <summary>
-/// Query
+/// Get cars by driver id query
 /// </summary>
-public record GetCarsByDriverIdQuery(
-    Guid DriverId
-) : IRequest<IQueryable<CarEntity>>;
+public record GetCarsByDriverIdQuery(Guid DriverId) : IRequest<IQueryable<CarEntity>>;
 
+/// <summary>
+/// Handler
+/// </summary>
 public class GetCarsByDriverIdQueryHandler : IRequestHandler<GetCarsByDriverIdQuery, IQueryable<CarEntity>>
 {
     private readonly IApplicationDbContext _context;
@@ -27,7 +28,7 @@ public class GetCarsByDriverIdQueryHandler : IRequestHandler<GetCarsByDriverIdQu
 
     public Task<IQueryable<CarEntity>> Handle(GetCarsByDriverIdQuery query, CancellationToken cancellationToken)
     {
-        var productList = _context.Cars.Where(d => d.DriverId == query.DriverId);
-        return Task.FromResult(productList);
+        var result = _context.Cars.Where(d => d.DriverId == query.DriverId);
+        return Task.FromResult(result);
     }
 }

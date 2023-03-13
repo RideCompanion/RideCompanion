@@ -1,10 +1,10 @@
 /*
- * Date: 2023-02-23
+ * Date: 2023-03-23
  * Author: A.A.Konkin
 */
 
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RideCompanion.Controllers.Base;
@@ -18,63 +18,65 @@ namespace RideCompanion.Controllers.Auth;
 public class AccountController : BaseController
 {
     private readonly SignInManager<UserEntity> _signInManager;
+    private readonly UserManager<UserEntity> _userManager;
 
-    public AccountController(SignInManager<UserEntity> signInManager)
+    public AccountController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager)
     {
         _signInManager = signInManager;
+        _userManager = userManager;
     }
 
     /// <summary>
-    /// Google login
+    /// Sign in with Google
     /// </summary>
-    /// <param name="provider"></param>
-    /// <param name="returnUrl"></param>
-    /// <returns></returns>
-    [HttpGet]
-    [AllowAnonymous]
-    public IActionResult GoogleLogin(string provider, string? returnUrl = null)
+    /// <param name="returnUrl"> Return URL </param>
+    /// <returns> Sign in with Google </returns>
+    public IActionResult SignInWithGoogle(string returnUrl = "/")
     {
-        var redirectUrl = Url.Action(nameof(GoogleLoginCallback), "Account", new { returnUrl });
-        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
-        return Challenge(properties, provider);
+        var redirectUrl = Url.Action(nameof(SignInWithGoogleCallback), "Account", new { returnUrl });
+        var properties = _signInManager.ConfigureExternalAuthenticationProperties(GoogleDefaults.AuthenticationScheme, redirectUrl);
+        return Challenge(properties, GoogleDefaults.AuthenticationScheme);
     }
 
     /// <summary>
-    /// Google login callback
+    /// Sign in with Google callback
     /// </summary>
-    /// <param name="returnUrl"></param>
-    /// <param name="remoteError"></param>
-    /// <returns></returns>
-    [HttpGet]
-    [AllowAnonymous]
-    public async Task<IActionResult> GoogleLoginCallback(string? returnUrl = null, string? remoteError = null)
+    /// <param name="returnUrl"> Return URL </param>
+    /// <returns> Sign in with Google </returns>
+    public async Task<IActionResult> SignInWithGoogleCallback(string returnUrl = "/")
     {
-        if (remoteError != null)
-        {
-            ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
-            return RedirectToAction("Index", "Home");
-        }
-
         var info = await _signInManager.GetExternalLoginInfoAsync();
         if (info == null)
-        {
-            return RedirectToAction("Index", "Home");
-        }
+            return RedirectToAction(nameof(SignInWithGoogle));
 
         var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
         if (result.Succeeded)
-        {
-            return LocalRedirect(returnUrl ?? "/");
-        }
-        if (result.IsLockedOut)
-        {
-            return RedirectToPage("Identity/Account/Login");
-        }
+            return LocalRedirect(returnUrl);
 
-        ViewData["ReturnUrl"] = returnUrl;
-        ViewData["LoginProvider"] = info.LoginProvider;
-        ViewData["Email"] = info.Principal.FindFirstValue(ClaimTypes.Email);
-        
-        return RedirectToAction("Index", "Home");
+        var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+        var user = new UserEntity { UserName = email, Email = email };
+        var createUserResult = await _userManager.CreateAsync(user);
+
+        if (!createUserResult.Succeeded)
+            return
+                RedirectToAction(nameof(SignInWithGoogle));
+
+        var addLoginResult = await _userManager.AddLoginAsync(user, info);
+
+        if (!addLoginResult.Succeeded)
+            return RedirectToAction(nameof(SignInWithGoogle));
+
+        await _signInManager.SignInAsync(user, isPersistent: false);
+        return LocalRedirect(returnUrl);
+    }
+
+    /// <summary>
+    /// Logout
+    /// </summary>
+    /// <returns> Redirect to sign in </returns>
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction(nameof(SignInWithGoogle));
     }
 }

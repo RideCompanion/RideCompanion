@@ -1,23 +1,17 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using RIdeCompanion.Data;
-using RIdeCompanion.Producers;
+using RIdeCompanion.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                       ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-builder.Services.AddSingleton<ProducerService>();
+DbExtension.ConfigureDatabaseAndIdentity(builder, connectionString);
+ServicesExtension.AddServices(builder);
+MappingExtensions.AutoMapperExtensions(builder);
+RedisCacheExtension.ConfigureRedisCache(builder);
+KafkaExtension.Configure(builder);
 
-builder
-    .Services
-    .AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-
-builder.Services.AddControllersWithViews();
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var app = builder.Build();
 

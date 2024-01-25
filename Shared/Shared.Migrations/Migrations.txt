@@ -1,0 +1,3 @@
+/usr/lib/dotnet/dotnet ef database update --project Shared/Shared.Migrations/Shared.Migrations.csproj --startup-project RideCompanion/RideCompanion.csproj --context Shared.Migrations.ApplicationDbContext --configuration Debug AddTables
+
+/usr/lib/dotnet/dotnet ef migrations add --project Shared/Shared.Migrations/Shared.Migrations.csproj --startup-project RideCompanion/RideCompanion.csproj --context Shared.Migrations.ApplicationDbContext --configuration Debug AddTables --output-dir Migrations

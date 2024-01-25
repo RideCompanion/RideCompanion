@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  ridecompanion:
+    build:
+      context: "C:\\Code\\kin\\RIdeCompanion"
+      dockerfile: "RIdeCompanion/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/RIdeCompanion.dll"
+    environment:
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/RIdeCompanion.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "ridecompanion:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\temak\\.nuget\\packages:/home/app/.nuget/packages"
+    - "C:\\Code\\kin\\RIdeCompanion\\RIdeCompanion:/app:rw"
+    - "C:\\Code\\kin\\RIdeCompanion:/src:rw"
+    working_dir: "/app"

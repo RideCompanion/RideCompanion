@@ -10,12 +10,12 @@ public class ProducerService
     public ProducerService(IConfiguration configuration)
     {
 
-        var producerconfig = new ProducerConfig
+        var producerConfig = new ProducerConfig
         {
             BootstrapServers = configuration["Kafka:BootstrapServers"]
         };
 
-        _producer = new ProducerBuilder<Null, string>(producerconfig).Build();
+        _producer = new ProducerBuilder<Null, string>(producerConfig).Build();
     }
 
     public async Task ProduceAsync(string topic, string message)

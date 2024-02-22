@@ -1,6 +1,6 @@
 services:
-  ridecompanion:
-    image: ridecompanion
+  ride-companion:
+    image: ride-companion
     build:
       context: .
       dockerfile: RIdeCompanion/Dockerfile

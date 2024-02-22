@@ -30,7 +30,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Modules\IdentityUser\IdentityUser.Domain\IdentityUser.Domain.csproj" />
       <ProjectReference Include="..\Shared\Shared.Core\Shared.Core.csproj" />
       <ProjectReference Include="..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
       <ProjectReference Include="..\Shared\Shared.Migrations\Shared.Migrations.csproj" />

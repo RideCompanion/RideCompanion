@@ -1,0 +1,81 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ride-companion-dev
+  name: ride-companion-dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ride-companion-dev
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ride-companion-dev
+    spec:
+      containers:
+        - name: ride-companion-dev
+          image: ride-companion:latest
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Development"
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 1
+            failureThreshold: 3
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            failureThreshold: 30
+            periodSeconds: 5
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              memory: "1024Mi"
+              #cpu: "250m"
+            limits:
+              memory: "2048Mi"
+              #cpu: "500m"
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ride-companion-dev
+spec:
+  ports:
+    - port: 5000
+      name: http
+      targetPort: 5000
+  selector:
+    app: ride-companion-dev
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ride-companion-dev
+  annotations:
+    kubernetes.io/ingress.class: "world-nginx"
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    #nginx.ingress.kubernetes.io/whitelist-source-range: 10.111.15.0/24,10.111.12.0/24,10.111.13.0/24,10.49.0.0/16,10.33.25.0/24,10.33.45.0/24
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
+    nginx.ingress.kubernetes.io/configuration-snippet : |
+      if ($request_uri ~* \.(?:html|json)$) {
+          add_header Cache-Control "no-store,no-cache";
+          add_header Pragma "no-cache";
+        }

@@ -56,23 +56,8 @@ metadata:
   name: ride-companion-dev
 spec:
   ports:
-    - port: 5000
+    - port: 80
       name: http
       targetPort: 5000
   selector:
     app: ride-companion-dev
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ride-companion-dev
-  annotations:
-    kubernetes.io/ingress.class: "world-nginx"
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
-    nginx.ingress.kubernetes.io/configuration-snippet : |
-      if ($request_uri ~* \.(?:html|json)$) {
-          add_header Cache-Control "no-store,no-cache";
-          add_header Pragma "no-cache";
-        }

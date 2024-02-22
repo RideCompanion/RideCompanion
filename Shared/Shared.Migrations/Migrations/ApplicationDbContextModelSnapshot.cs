@@ -17,7 +17,7 @@ namespace Shared.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -97,7 +97,7 @@ namespace Shared.Migrations.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("IdentityUser.Domain.Entities.IdentityUser", b =>
+            modelBuilder.Entity("IdentityUser.Domain.Entities.AppUserEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -228,7 +228,7 @@ namespace Shared.Migrations.Migrations
 
             modelBuilder.Entity("IdentityUser.Domain.Entities.AppUserClaimEntity", b =>
                 {
-                    b.HasOne("IdentityUser.Domain.Entities.IdentityUser", null)
+                    b.HasOne("IdentityUser.Domain.Entities.AppUserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -237,7 +237,7 @@ namespace Shared.Migrations.Migrations
 
             modelBuilder.Entity("IdentityUser.Domain.Entities.AppUserLoginEntity", b =>
                 {
-                    b.HasOne("IdentityUser.Domain.Entities.IdentityUser", null)
+                    b.HasOne("IdentityUser.Domain.Entities.AppUserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -252,7 +252,7 @@ namespace Shared.Migrations.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("IdentityUser.Domain.Entities.IdentityUser", null)
+                    b.HasOne("IdentityUser.Domain.Entities.AppUserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -261,13 +261,12 @@ namespace Shared.Migrations.Migrations
 
             modelBuilder.Entity("IdentityUser.Domain.Entities.AppUserTokenEntity", b =>
                 {
-                    b.HasOne("IdentityUser.Domain.Entities.IdentityUser", null)
+                    b.HasOne("IdentityUser.Domain.Entities.AppUserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
-
 #pragma warning restore 612, 618
         }
     }

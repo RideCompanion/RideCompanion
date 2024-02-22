@@ -1,4 +1,4 @@
-﻿using IdentityUser.Domain.Entities;
+using IdentityUser.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace RIdeCompanion.Extensions;
@@ -12,6 +12,5 @@ public static class ServicesExtension
     {
         webApplicationBuilder.Services.AddScoped<UserManager<AppUserEntity>>();
         webApplicationBuilder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-
     }
 }

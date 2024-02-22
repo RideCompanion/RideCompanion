@@ -1,8 +1,8 @@
 # This is a generated file. Not intended for manual editing.
 services:
-  ridecompanion:
+  ride-companion:
     build:
-      context: "C:\\kin\\code\\RideCompanion"
+      context: "C:\\Code\\kin\\RIdeCompanion"
       dockerfile: "RIdeCompanion/Dockerfile"
       target: "base"
       args:
@@ -20,17 +20,17 @@ services:
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
       RIDER_DEBUGGER_LOG_DIR: "/var/opt/rider-debugger"
       RESHARPER_LOG_CONF: "/etc/opt/rider-debugger/backend-log.xml"
-    image: "ridecompanion:dev"
+    image: "ride-companion:dev"
     ports:
-    - "127.0.0.1:57003:57100"
-    - "127.0.0.1:57203:57300"
+    - "127.0.0.1:57053:57100"
+    - "127.0.0.1:57253:57300"
     volumes:
     - "C:\\Users\\temak\\.nuget\\packages:/home/app/.nuget/packages"
-    - "C:\\kin\\code\\RideCompanion\\RIdeCompanion:/app:rw"
-    - "C:\\kin\\code\\RideCompanion:/src:rw"
+    - "C:\\Code\\kin\\RIdeCompanion\\RIdeCompanion:/app:rw"
+    - "C:\\Code\\kin\\RIdeCompanion:/src:rw"
     - "C:\\Users\\temak\\AppData\\Local\\JetBrains\\RiderRemoteDebugger\\2023.3.3\\\
       Linux64:/opt/rider-debugger"
     - "C:\\Users\\temak\\AppData\\Local\\Programs\\Rider\\bin:/etc/opt/rider-debugger/backend-log.xml"
     - "C:\\Users\\temak\\AppData\\Local\\JetBrains\\Rider2023.3\\log\\DebuggerWorker\\\
-      JetBrains.Debugger.Worker.2024_2_01_21_20_29:/var/opt/rider-debugger:rw"
+      JetBrains.Debugger.Worker.2024_2_22_13_11_16:/var/opt/rider-debugger:rw"
     working_dir: "/app"

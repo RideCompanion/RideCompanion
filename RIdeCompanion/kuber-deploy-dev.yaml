@@ -43,10 +43,8 @@ spec:
           resources:
             requests:
               memory: "1024Mi"
-              #cpu: "250m"
             limits:
               memory: "2048Mi"
-              #cpu: "500m"
       imagePullSecrets:
         - name: regcred
       restartPolicy: Always
@@ -72,7 +70,6 @@ metadata:
     kubernetes.io/ingress.class: "world-nginx"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-    #nginx.ingress.kubernetes.io/whitelist-source-range: 10.111.15.0/24,10.111.12.0/24,10.111.13.0/24,10.49.0.0/16,10.33.25.0/24,10.33.45.0/24
     nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
     nginx.ingress.kubernetes.io/configuration-snippet : |
       if ($request_uri ~* \.(?:html|json)$) {

@@ -1,10 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {CompanionsComponent} from './components/companions/companions.component';
+import {CompanionRoutingModule} from "./companion.routing.module";
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CompanionsComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    CompanionRoutingModule
   ]
 })
-export class CompanionModule { }
+export class CompanionModule {
+}

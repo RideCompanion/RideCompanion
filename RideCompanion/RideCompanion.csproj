@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <SpaRoot>ClientApp\</SpaRoot>
-        <SpaProxyServerUrl>https://localhost:44465</SpaProxyServerUrl>
+        <SpaProxyServerUrl>http://localhost:4200</SpaProxyServerUrl>
         <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
@@ -25,13 +25,6 @@
         </Content>
         <None Remove="$(SpaRoot)**"/>
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**"/>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="ClientApp\src\app\modules\companion\components\" />
-      <Folder Include="ClientApp\src\app\modules\home\components\" />
-      <Folder Include="ClientApp\src\app\services\data-providers\" />
-      <Folder Include="ClientApp\src\app\shared\components\" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

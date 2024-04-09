@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MyRidesComponent} from "./components/my-rides/my-rides.component";
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule, MyRidesComponent
   ]
 })
-export class RideModule { }
+export class RideModule {
+}

@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="ClientApp\src\app\components\" />
       <Folder Include="ClientApp\src\app\modules\" />
       <Folder Include="ClientApp\src\app\modules\ride\components\" />
     </ItemGroup>

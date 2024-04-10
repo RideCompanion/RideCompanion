@@ -1,15 +1,26 @@
 import { Routes } from '@angular/router';
-import {HomeModule} from "./modules/home/home.module";
 import {NotFoundComponent} from "./components/not-found/not-found.component";
+import {HomeComponent} from "./components/home/home.component";
+import {RideModule} from "./modules/ride/ride.module";
+import {CompanionModule} from "./modules/companion/companion.module";
 
 export const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full'
+  },
+  {
     path: 'home',
-    loadChildren: () => HomeModule
+    component: HomeComponent
   },
   {
     path: 'ride',
-    loadChildren: () => import('./modules/ride/ride.module').then(m => m.RideModule)
+    loadChildren: () => RideModule
+  },
+  {
+    path: 'companion',
+    loadChildren: () => CompanionModule
   },
   {
     path: '**',

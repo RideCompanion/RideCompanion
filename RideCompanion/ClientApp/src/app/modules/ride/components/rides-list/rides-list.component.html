@@ -1,1 +1,37 @@
-<p>rides-list works!</p>
+<div class="d-flex flex-column">
+  <app-ride-route></app-ride-route>
+  <div class="card mt-4">
+    <div class="card-header">
+      Rides List
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Special title treatment</h5>
+      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <div class="row">
+        <div class="col-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>From</th>
+                <th>To</th>
+                <th>Date</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (ride of ridesList; track ride) {
+                <tr>
+                  <td>{{ ride.from }}</td>
+                  <td>{{ ride.to }}</td>
+                  <td>{{ ride.date }}</td>
+                  <td>{{ ride.price }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

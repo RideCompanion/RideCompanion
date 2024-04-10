@@ -30,7 +30,10 @@
     <ItemGroup>
       <Folder Include="ClientApp\src\app\components\" />
       <Folder Include="ClientApp\src\app\modules\" />
+      <Folder Include="ClientApp\src\app\modules\companion\components\" />
       <Folder Include="ClientApp\src\app\modules\ride\components\" />
+      <Folder Include="ClientApp\src\app\services\component-services\offcanvas\" />
+      <Folder Include="ClientApp\src\app\services\data-providers\companion\" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

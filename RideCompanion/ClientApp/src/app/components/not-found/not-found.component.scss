@@ -1,0 +1,22 @@
+.console {
+  color: #222222;
+  font-family: monospace;
+  font-size: 20px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.console span {
+  display: inline-block;
+  overflow: hidden;
+  animation: typing 1s steps(18, end) forwards;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}

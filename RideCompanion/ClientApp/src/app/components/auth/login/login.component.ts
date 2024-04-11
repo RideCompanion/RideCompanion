@@ -1,9 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth/auth.service";
 import {StorageService} from "../../../services/storage/storage.service";
+import { FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [
+    ReactiveFormsModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -29,11 +34,9 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     const {username, password} = this.form;
-
     this.authService.login(username, password).subscribe({
       next: data => {
         this.storageService.saveUser(data);
-
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.storageService.getUser().roles;

@@ -8,10 +8,9 @@ describe('OffcanvasComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OffcanvasComponent]
-    })
-    .compileComponents();
-    
+      imports: [OffcanvasComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(OffcanvasComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

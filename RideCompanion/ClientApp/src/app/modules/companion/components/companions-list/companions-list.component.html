@@ -1,12 +1,13 @@
 <div class="d-flex flex-column">
   <div class="card mt-4">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between align-items-center">
       Rides List
+      <button (click)="openCreateCompanion()" class="btn btn-primary">
+        Create Companion
+      </button>
     </div>
     <div class="card-body">
-      <h5 class="card-title">
-        Special title treatment
-      </h5>
+      <h5 class="card-title">Special title treatment</h5>
       <p class="card-text">
         With supporting text below as a natural lead-in to additional content.
       </p>
@@ -14,17 +15,21 @@
         <div class="col-12">
           <table class="table">
             <thead>
-            <tr>
-              <th>Name</th>
-              <th>Age</th>
-            </tr>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Last Name</th>
+              </tr>
             </thead>
             <tbody>
               @for (companion of companionsList; track companionsList) {
-                <tr>
-                  <td>{{ companion.name }}</td>
-                  <td>{{ companion.age }}</td>
-                </tr>
+              <tr>
+                <td>{{ companion.firstName }}</td>
+                <td>{{ companion.lastName }}</td>
+                <td>{{ companion.birthDate.getFullYear() }}</td>
+                <td>{{ companion.address.city }}</td>
+              </tr>
               }
             </tbody>
           </table>
@@ -34,19 +39,49 @@
   </div>
 </div>
 
-<button (click)="openCreateCompanion()">Create Companion</button>
-
 <ng-template #createCompanion>
   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-    <p>Value: {{ name.value }}</p>
-    <label for="name">Name: </label>
-    <input id="name" type="text" [formControl]="name">
-    <button type="button" (click)="updateName()">Update Name</button>
-    <label for="first-name">First Name: </label>
-    <input id="first-name" type="text" formControlName="firstName">
-    <label for="last-name">Last Name: </label>
-    <input id="last-name" type="text" formControlName="lastName">
-    <p>Complete the form to enable button.</p>
-    <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    <p>Status: {{ profileForm.status }}</p>
+    <p>First Name: {{ profileForm.value.firstName }}</p>
+    <p>Last Name: {{ profileForm.value.lastName }}</p>
+    <p>Zp: {{ profileForm.value.address?.zip }}</p>
+    <p>State: {{ profileForm.value.address?.state }}</p>
+    <p>City: {{ profileForm.value.address?.city }}</p>
+    <p>Street: {{ profileForm.value.address?.street }}</p>
+
+    <div class="d-flex flex-column">
+      <div class="mb-3 w-100">
+        <label for="firstName" class="form-label">First Name:</label>
+        <input id="firstName" formControlName="firstName" type="text" class="form-control"
+          placeholder="Companion First Name" />
+      </div>
+      <div class="mb-3 w-100">
+        <label for="lastName" class="form-label">Last Name:</label>
+        <input id="lastName" formControlName="lastName" type="text" class="form-control"
+          placeholder="Companion Last Name" />
+      </div>
+      <div formGroupName="address">
+        <div class="mb-3 w-100">
+          <label for="zip" class="form-label">Zip:</label>
+          <input id="zip" formControlName="zip" type="text" class="form-control" placeholder="zip" />
+        </div>
+        <div class="mb-3 w-100">
+          <label for="state" class="form-label">State:</label>
+          <input id="state" formControlName="state" type="text" class="form-control" placeholder="State" />
+        </div>
+        <div class="mb-3 w-100">
+          <label for="city" class="form-label">City:</label>
+          <input id="city" formControlName="city" type="text" class="form-control" placeholder="City" />
+        </div>
+        <div class="mb-3 w-100">
+          <label for="street" class="form-label">Street:</label>
+          <input id="street" formControlName="street" type="text" class="form-control" placeholder="Street" />
+        </div>
+      </div>
+      <button type="submit" [disabled]="!profileForm.valid" class="btn btn-primary w-100 mb-3"
+        [disabled]="!profileForm.valid">
+        Submit
+      </button>
+    </div>
   </form>
 </ng-template>

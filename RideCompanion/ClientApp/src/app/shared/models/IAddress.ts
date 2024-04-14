@@ -1,9 +1,6 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class ICompanionService {
-
-  constructor() { }
+export interface IAddress {
+  zip: string;
+  state: string;
+  city: string;
+  street: string;
 }

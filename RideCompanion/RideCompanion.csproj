@@ -33,10 +33,6 @@
       <Folder Include="ClientApp\src\app\modules\" />
       <Folder Include="ClientApp\src\app\modules\companion\components\" />
       <Folder Include="ClientApp\src\app\modules\ride\components\" />
-      <Folder Include="ClientApp\src\app\services\auth\" />
-      <Folder Include="ClientApp\src\app\services\data-providers\auth\" />
-      <Folder Include="ClientApp\src\app\services\data-providers\companion\" />
-      <Folder Include="ClientApp\src\app\services\storage\" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

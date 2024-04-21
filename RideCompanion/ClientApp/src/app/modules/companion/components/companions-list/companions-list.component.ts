@@ -1,9 +1,11 @@
-import { Component, ViewChild, TemplateRef } from '@angular/core';
+import { Component, ViewChild, TemplateRef, OnInit } from '@angular/core';
 import { RideRouteComponent } from '../../../ride/components/ride-route/ride-route.component';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { OffcanvasComponent } from '../../../../components/offcanvas/offcanvas.component';
 import { CompanionService } from '../../../../shared/services/companion/companion.service';
 import { FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { ConfigService } from '../../../../shared/config/config.service';
+import { Config } from '../../../../shared/models/config';
 
 @Component({
   selector: 'app-companions-list',
@@ -12,14 +14,18 @@ import { FormControl, ReactiveFormsModule, FormGroup } from '@angular/forms';
   templateUrl: './companions-list.component.html',
   styleUrl: './companions-list.component.scss',
 })
-export class CompanionsListComponent {
-
+export class CompanionsListComponent implements OnInit {
   @ViewChild('createCompanion') createCompanion!: TemplateRef<any>;
 
   constructor(
     private _offcanvas: NgbOffcanvas,
-    private companionService: CompanionService
+    private companionService: CompanionService,
+    private configService: ConfigService
   ) {}
+
+  ngOnInit(): void {
+    this.showConfig();
+  }
 
   public companionsList = this.companionService.getCompanions();
 
@@ -39,6 +45,10 @@ export class CompanionsListComponent {
       zip: new FormControl(''),
     }),
   });
+
+  showConfig() {
+    this.configService.getConfig().subscribe((data) => (console.log(data)));
+  }
 
   onSubmit() {
     console.warn(this.profileForm.value);

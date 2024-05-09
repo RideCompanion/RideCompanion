@@ -35,6 +35,14 @@
       <Folder Include="ClientApp\src\app\modules\ride\components\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Modules\Companion.App\Companion.App.csproj" />
+      <ProjectReference Include="..\Modules\Driver.App\Driver.App.csproj" />
+      <ProjectReference Include="..\Modules\Identity.App\Identity.App.csproj" />
+      <ProjectReference Include="..\Modules\Ride.App\Ride.App.csproj" />
+      <ProjectReference Include="..\Shared\Shared.Migrations\Shared.Migrations.csproj" />
+    </ItemGroup>
+
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
         <!-- Ensure Node.js is installed -->
         <Exec Command="node --version" ContinueOnError="true">

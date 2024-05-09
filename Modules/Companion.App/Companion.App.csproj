@@ -7,4 +7,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Companion.Infrastructure\Companion.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

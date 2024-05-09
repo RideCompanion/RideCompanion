@@ -52,17 +52,6 @@ public class UserService(
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
-    public Task<UserEntity?> GetById(int id)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public async Task<UserEntity?> GetById(Guid id)
     {
         return await db.Users.FirstOrDefaultAsync(x => x.Id == id);
